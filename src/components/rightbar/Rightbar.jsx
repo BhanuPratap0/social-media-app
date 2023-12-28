@@ -16,7 +16,7 @@ const Rightbar = ({ user }) => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/user/friends/" + user._id);
+        const friendList = await axios.get("https://social-media-gfgj.onrender.com/api/user/friends/" + user._id);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error)
@@ -28,7 +28,7 @@ const Rightbar = ({ user }) => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/user/friends/" + currentUser._id);
+        const friendList = await axios.get("https://social-media-gfgj.onrender.com/api/user/friends/" + currentUser._id);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error)
@@ -60,10 +60,10 @@ const Rightbar = ({ user }) => {
     try {
 
       if (followed) {
-        await axios.put("/user/" + user._id + "/unfollow", { userId: currentUser._id })
+        await axios.put("https://social-media-gfgj.onrender.com/api/user/" + user._id + "/unfollow", { userId: currentUser._id })
         
       } else {
-        await axios.put("/user/" + user._id + "/follow", { userId: currentUser._id });
+        await axios.put("https://social-media-gfgj.onrender.com/api/user/" + user._id + "/follow", { userId: currentUser._id });
       
       }
 

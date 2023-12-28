@@ -15,7 +15,7 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get(`/user?username=${username}`);
+            const res = await axios.get(`https://social-media-gfgj.onrender.com/api/user?username=${username}`);
             setUser(res.data);
         };
         fetchUser();

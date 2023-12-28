@@ -17,7 +17,7 @@ const Post = ({post}) => {
     }, [currentUser._id, post.likes]);
     useEffect(() => {
         const fetchUser = async() =>{
-          const res = await axios.get(`/user?userId=${post.userId}`);
+          const res = await axios.get(`https://social-media-gfgj.onrender.com/api/user?userId=${post.userId}`);
           setUser(res.data);
         };
         fetchUser();
@@ -28,7 +28,7 @@ const Post = ({post}) => {
     const handleLike = () => {
 
         try {
-            axios.put("/post/" + post._id + "/like", {userId: currentUser._id});
+            axios.put("https://social-media-gfgj.onrender.com/api/post/" + post._id + "/like", {userId: currentUser._id});
         } catch (error) {
             
         }
