@@ -10,16 +10,18 @@ const INITIAL_STATE = {
 export const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {
+    const [searchResult, setSearchResult] = useState([]);
     const [followingArray, setFollowingsArray] = useState([]);
     const [postChange, setPostChange] = useState();
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE)
 
     useEffect(() => {
         localStorage.setItem("user", JSON.stringify(state.user))
-    }, [state.user])
-
+    },[])
     return (
         <AuthContext.Provider value={{
+            searchResult, 
+            setSearchResult,
             followingArray, 
             setFollowingsArray,
             postChange,

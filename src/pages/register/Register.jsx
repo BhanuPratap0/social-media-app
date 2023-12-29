@@ -133,11 +133,11 @@ const Register = () => {
             <input type="text" ref={city} placeholder='City' className='loginInput' />
 
             <select ref={relationship} className='loginInput'>
-              <option disabled selected>Relationship</option>
-              <option value="Single">Single</option>
-              <option value="Not Single">Not Single</option>
-              <option value="Married">Married</option>
-              <option value="">Prefer Not To Say</option>
+              <option className='loginInput'  disabled selected>Relationship</option>
+              <option className='loginInput' value="Single">Single</option>
+              <option className='loginInput' value="Not Single">Not Single</option>
+              <option className='loginInput' value="Married">Married</option>
+              <option className='loginInput' value="">Prefer Not To Say</option>
             </select>
 
             <label htmlFor='file' style={{ display: "flex", justifyContent: "space-between" }} className='loginInput' >

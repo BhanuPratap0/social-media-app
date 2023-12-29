@@ -1,16 +1,19 @@
 import { Chat, Notifications, Person, Search } from "@mui/icons-material"
 import "./topbar.css"
-import { Link } from "react-router-dom"
-import { useContext, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import axios from "axios"
 import { CircularProgress } from "@mui/material"
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 export default function Topbar() {
+
+
+
   const [isLoading, setIsLoading] = useState(false);
-  const { user, followingArray } = useContext(AuthContext)
-  const [searchResult, setSearchResult] = useState([]);
+  const { user, followingArray, searchResult, setSearchResult } = useContext(AuthContext)
+
   const searchUser = async (query) => {
     if (!query) {
       setSearchResult([])
@@ -26,6 +29,13 @@ export default function Topbar() {
         console.log("no user to search")
       }
     }
+  }
+
+  const history = useNavigate();
+
+  const logoutHandler = () =>{
+    localStorage.removeItem('user');
+    history("/login");
   }
 
   return (
@@ -63,9 +73,18 @@ export default function Topbar() {
               <span className="topbarIconBadge">1</span>
             </div>
           </div>
-          <Link to={`/profile/${user.username}`} >
-            <img src={user.profilePicture} alt="" className="topbarImg" />
-          </Link>
+
+          <div class="dropdown">
+            <button class="btn profile-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <Link >
+                <img src={user.profilePicture} alt="" className="topbarImg" />
+              </Link>
+            </button>
+            <ul class="dropdown-menu">
+              <li><Link class="dropdown-item" to={`/profile/${user.username}`} >Profile</Link></li>
+              <li><button onClick={logoutHandler} class="dropdown-item" href="#">Logout</button></li>
+            </ul>
+          </div>
         </div>
 
       </div>
@@ -74,15 +93,15 @@ export default function Topbar() {
           <div className="serachUserContainer" >
             {isLoading ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} />
               :
-              <Link style={{ textDecoration: "none", fontWeight:"500" }} to={`/profile/${result.username}`}><div className="searchUserItem">
-                <div style={{display:"flex"}} >
-                <img src={result.profilePicture} alt="" className="searchUserImg" />
-                <div className="serachUserInf">
-                  <span>{result.username}</span>
-                  <span className="serachUserAbout" >{result.city} | {result.relationship}</span>
+              <Link style={{ textDecoration: "none", fontWeight: "500" }} to={`/profile/${result.username}`}><div className="searchUserItem">
+                <div style={{ display: "flex" }} >
+                  <img src={result.profilePicture} alt="" className="searchUserImg" />
+                  <div className="serachUserInf">
+                    <span>{result.username}</span>
+                    <span className="serachUserAbout" >{result.city} | {result.relationship}</span>
+                  </div>
                 </div>
-                </div>
-                { followingArray.includes(result._id) ? "" : <PersonAddAltIcon />  }
+                {followingArray.includes(result._id) ? "" : <PersonAddAltIcon />}
               </div>
               </Link>
             }
@@ -92,3 +111,4 @@ export default function Topbar() {
     </>
   )
 }
+

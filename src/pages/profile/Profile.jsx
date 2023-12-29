@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Feed from '../../components/feed/Feed'
 import Rightbar from '../../components/rightbar/Rightbar'
 import Sidebar from '../../components/sidebar/Sidebar'
@@ -6,21 +6,24 @@ import Topbar from '../../components/topbar/Topbar'
 import './profile.css'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
 
 
 const Profile = () => {
 
     const [userProfile, setUserProfile] = useState({})
     const username = useParams().username;
+    const {setSearchResult } = useContext(AuthContext)
 
     useEffect(() => {
         const fetchUser = async () => {
             const res = await axios.get(`https://social-media-gfgj.onrender.com/api/user?username=${username}`);
-
             setUserProfile(res.data);
         };
         fetchUser();
-    }, [username])
+        setSearchResult([])
+        
+    },[username])
 
     return (
         <>

@@ -14,7 +14,7 @@
 }
 
 .loginLeft,.loginRight{
-    flex: 1;
+    flex: 1 !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,7 +32,7 @@
 }
 
 .registerBox{
-    height: 500px;
+    height: 700px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
@@ -42,7 +42,7 @@
 }
 
 .loginInput{
-    height: 50px;
+    height: 60px;
     border-radius: 10px;
     border: 1px solid grey;
     font-size: 18px;
@@ -110,4 +110,26 @@ textarea{
 
 option{
     color: black;
+}
+
+@media only screen and (max-width: 600px) {
+    .register{
+        flex-direction: column;
+    }
+    .RegisterWrapper{
+        width: 80%;
+        height: 100%;
+        flex-direction: column;
+    }
+    .loginRegisterButton{
+        height: 70px !important;
+    }
+    .loginLeft,.loginRight{
+        flex: 0.8 !important;
+    }
+    .loginInput .upload-button{
+        padding: 0;
+        font-size: 16px;
+    }
+   
 }
