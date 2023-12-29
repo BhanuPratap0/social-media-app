@@ -15,7 +15,7 @@ export default function Topbar() {
       return;
     } else {
       try {
-        const {data}  = await axios.get(`http://localhost:8800/api/user/searchUsers?search=${query}`, { userId: user._id });
+        const {data}  = await axios.get(`https://social-media-gfgj.onrender.com/api/user/searchUsers?search=${query}`, { userId: user._id });
         console.log(data);
         setSearchResult(data);
       } catch (error) {
