@@ -1,12 +1,11 @@
-import axios from 'axios'
+import axios from "axios";
 
-export const loginCall = async (userCredentials, dispatch) => {
+export const loginCall = async (userCredential, dispatch) => {
     dispatch({ type: "LOGIN_START" });
     try {
-        const res = await axios.post("https://social-media-gfgj.onrender.com/api/auth/login", userCredentials);
-        localStorage.setItem("user", JSON.stringify(res.data))
+        const res = await axios.post("/auth/login", userCredential);
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-    } catch (error) {
-        dispatch({ type: "LOGIN_FAILURE", payload: error });
+    } catch (err) {
+        dispatch({ type: "LOGIN_FAILURE", payload: err });
     }
-}
+};
