@@ -9,14 +9,18 @@ import { Add, Remove } from '@mui/icons-material';
 const Rightbar = ({ user }) => {
 
   const [friends, setFriends] = useState([]);
-  const { user: currentUser } = useContext(AuthContext);
-  const [followed, setFollowed] = useState(currentUser.followings.includes(user?.id));
+  const { followingArray, setFollowingsArray, user: currentUser, dispatch} = useContext(AuthContext);
+  const [followed, setFollowed] = useState(false);
 
+  useEffect(()=>{
+    setFollowed(followingArray.includes(user?._id));
+  },[user?._id])
 
   useEffect(() => {
     const getFriends = async () => {
+   
       try {
-        const friendList = await axios.get("https://social-media-gfgj.onrender.com/api/user/friends/" + user._id);
+        const friendList = await axios.get(`https://social-media-gfgj.onrender.com/api/user/friends/${user._id}`);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error)
@@ -35,8 +39,31 @@ const Rightbar = ({ user }) => {
       }
     };
     getFriends();
+
+    setFollowingsArray(currentUser.followings);
   },[currentUser]);
 
+  const followHandler = async () => {
+    try {
+
+      if (followed) {
+        await axios.put(`https://social-media-gfgj.onrender.com/api/user/${user._id}/unfollow`, { userId: currentUser._id });
+        const removeFollower = followingArray.filter(followerItem => followerItem !== user._id )
+        console.log(removeFollower);
+        setFollowingsArray(removeFollower);
+
+      } else {
+        await axios.put(`https://social-media-gfgj.onrender.com/api/user/${user._id}/follow`, { userId: currentUser._id });
+        const newArray = [...followingArray, user._id ];
+        console.log(newArray);
+        setFollowingsArray(newArray);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+    setFollowed(!followed);
+  }
 
   const HomeRightBar = () => {
     return (
@@ -45,7 +72,7 @@ const Rightbar = ({ user }) => {
           <img className='birthdayImg' src={require("../images/gift.png")} alt="" />
           <span className="birthdayText"><b>John doe</b> and <b>3 other friends </b> have birthday today</span>
         </div>
-        <img className='rightbarAd' src="/assests/ad.jpg" alt="" />
+        <img className='rightbarAd' src={require("../images/ad.jpg")} alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
           {friends.map(u => (
@@ -56,24 +83,10 @@ const Rightbar = ({ user }) => {
     )
   }
 
-  const followHandler = async () => {
-    try {
 
-      if (followed) {
-        await axios.put("https://social-media-gfgj.onrender.com/api/user/" + user._id + "/unfollow", { userId: currentUser._id })
-        
-      } else {
-        await axios.put("https://social-media-gfgj.onrender.com/api/user/" + user._id + "/follow", { userId: currentUser._id });
-      
-      }
-
-    } catch (error) {
-      console.log(error);
-    }
-    setFollowed(!followed);
-  }
 
   const ProfilePageRightbar = () => {
+
     return (
       <>
         {user.username !== currentUser.username && (

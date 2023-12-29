@@ -8,19 +8,23 @@ export default function Topbar() {
 
   const { user } = useContext(AuthContext)
 
+  const searchUser = async() => {}
+
   return (
+    <>
     <div className="topbarContainer">
       <div className="topbarLeft">
         <Link to="/" style={{ textDecoration: "none" }} >
-          <span className="logo">BhanuSocial</span>
+          <span className="logo">SociSync</span>
           <span className="sublogo">BS</span>
         </Link>
       </div>
       <div className="topbarCenter">
         <div className="searchbar">
           <Search className="searchIcon" />
-          <input placeholder="Search for friend, post or video" className="searchInput" />
+          <input onChange={searchUser} placeholder="Search for friend, post or video" className="searchInput" />
         </div>
+          
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
@@ -45,6 +49,13 @@ export default function Topbar() {
           <img src={user.profilePicture} alt="" className="topbarImg" />
         </Link>
       </div>
+      
     </div>
+    <div className="serachUserContainer" >
+      <div className="searchUserItem">Bhanu</div>
+      <div className="searchUserItem">Bhanu</div>
+      <div className="searchUserItem">Bhanu</div>
+    </div>
+    </>
   )
 }

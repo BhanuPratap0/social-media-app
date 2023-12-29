@@ -10,13 +10,14 @@ import { useParams } from 'react-router-dom'
 
 const Profile = () => {
 
-    const [user, setUser] = useState({})
+    const [userProfile, setUserProfile] = useState({})
     const username = useParams().username;
 
     useEffect(() => {
         const fetchUser = async () => {
             const res = await axios.get(`https://social-media-gfgj.onrender.com/api/user?username=${username}`);
-            setUser(res.data);
+
+            setUserProfile(res.data);
         };
         fetchUser();
     }, [username])
@@ -29,17 +30,17 @@ const Profile = () => {
                 <div className="profileRight">
                     <div className="profileRightTop">
                         <div className="profileCover">
-                            <img src={user.coverPicture} alt="" className="profileCoverImg" />
-                            <img src={user.profilePicture} alt="" className="profileUserImg" />
+                            <img src={userProfile.coverPicture} alt="" className="profileCoverImg" />
+                            <img src={userProfile.profilePicture} alt="" className="profileUserImg" />
                         </div>
                         <div className="profileInfo">
-                            <h4 className='profileInfoName' >{user.username}</h4>
-                            <span className='profileInfoDesc' >{user.desc}</span>
+                            <h4 className='profileInfoName' >{userProfile.username}</h4>
+                            <span className='profileInfoDesc' >{userProfile.desc}</span>
                         </div>
                     </div>
                     <div className="profileRightBottom">
                         <Feed username={username} />
-                        <Rightbar user={user} />
+                        <Rightbar user={userProfile} />
                     </div>
                 </div>
             </div>

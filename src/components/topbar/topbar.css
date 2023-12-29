@@ -113,3 +113,19 @@
 
 }
 
+.serachUserContainer{
+    z-index: 99;
+    position: fixed;
+    background-color:#1877f2;
+    width: 350px;
+    margin-left: 390px;
+    padding: 10px;
+}
+.searchUserItem{
+    padding: 10px;
+    height: 35px;
+    color: black;
+    background-color: white;
+    margin-bottom: 5px;
+}
+
