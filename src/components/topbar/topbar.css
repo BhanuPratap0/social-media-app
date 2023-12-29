@@ -100,18 +100,7 @@
     cursor: pointer;
 }
 
-@media only screen and (max-width: 600px){
-    .topbarLinks{
-        display: none;
-    }
-    .logo{
-        display: none;
-    }
-    .sublogo{
-        display: block;
-    }
 
-}
 
 .serachUserContainer{
     align-items: center;
@@ -150,4 +139,21 @@
 .serachUserAbout{
     font-weight: 400;
     font-size: 12px;
+}
+@media only screen and (max-width: 600px){
+    .topbarLinks{
+        display: none;
+    }
+    .logo{
+        display: none;
+    }
+    .sublogo{
+        display: block;
+    }
+    .serachUserContainer{
+        display: block;
+        margin-left: 10px;
+        background-color: #1876f2c9;
+    }
+
 }
