@@ -4,19 +4,23 @@ import { Link } from "react-router-dom"
 import { useContext, useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import axios from "axios"
+import { CircularProgress } from "@mui/material"
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 export default function Topbar() {
-
-  const { user } = useContext(AuthContext)
+  const [isLoading, setIsLoading] = useState(false);
+  const { user, followingArray } = useContext(AuthContext)
   const [searchResult, setSearchResult] = useState([]);
   const searchUser = async (query) => {
     if (!query) {
       setSearchResult([])
       return;
     } else {
+      setIsLoading(true);
       try {
-        const {data}  = await axios.get(`https://social-media-gfgj.onrender.com/api/user/searchUsers?search=${query}`, { userId: user._id });
+        const { data } = await axios.get(`https://social-media-gfgj.onrender.com/api/user/searchUsers?search=${query}`, { userId: user._id });
         console.log(data);
+        setIsLoading(false);
         setSearchResult(data);
       } catch (error) {
         console.log("no user to search")
@@ -65,10 +69,23 @@ export default function Topbar() {
         </div>
 
       </div>
-      {searchResult!==null && searchResult.map((result) => (
+      {searchResult !== null && searchResult.map((result) => (
         <>
           <div className="serachUserContainer" >
-            <div className="searchUserItem">{result.username}</div>
+            {isLoading ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} />
+              :
+              <Link style={{ textDecoration: "none", fontWeight:"500" }} to={`/profile/${result.username}`}><div className="searchUserItem">
+                <div style={{display:"flex"}} >
+                <img src={result.profilePicture} alt="" className="searchUserImg" />
+                <div className="serachUserInf">
+                  <span>{result.username}</span>
+                  <span className="serachUserAbout" >{result.city} | {result.relationship}</span>
+                </div>
+                </div>
+                { followingArray.includes(result._id) ? "" : <PersonAddAltIcon />  }
+              </div>
+              </Link>
+            }
           </div >
         </>
       ))}
