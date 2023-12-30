@@ -35,7 +35,7 @@
 
 .searchInput {
     border: none;
-    width: 70%;
+    width: 60%;
 }
 
 .searchInput:focus {
@@ -126,7 +126,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px;
-    height: 35px;
+    height: 45px;
     color: black;
     background-color: white;
     margin-bottom: 5px;
@@ -134,10 +134,12 @@
 }
 
 .searchUserImg {
-    width: 30px;
-    height: 30px;
+    margin-top: 2px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     margin-right: 20px;
+    object-fit: cover;
 }
 
 .searchUserItem:hover {

@@ -64,7 +64,7 @@ const Share = () => {
     e.preventDefault();
     try {
       
-      const responce = await axios.delete("https://social-media-gfgj.onrender.com/api/post/delete-image/" + imageData);
+      const responce = await axios.delete("https://sociosync.onrender.com/post/delete-image/" + imageData);
       console.log(responce);
       setFile("");
     } catch (error) {
@@ -89,7 +89,7 @@ const Share = () => {
     }
 
     try {
-      await axios.post("https://social-media-gfgj.onrender.com/api/post/", newPost);
+      await axios.post("https://sociosync.onrender.com/api/post/", newPost);
       setMessage("Post Uploaded")
       setToastType("success")
       setOpen(true);

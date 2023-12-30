@@ -21,7 +21,7 @@ export default function Topbar() {
     } else {
       setIsLoading(true);
       try {
-        const { data } = await axios.get(`https://social-media-gfgj.onrender.com/api/user/searchUsers?search=${query}`, { userId: user._id });
+        const { data } = await axios.get(`https://sociosync.onrender.com/api/user/searchUsers?search=${query}`, { userId: user._id });
         console.log(data);
         setIsLoading(false);
         setSearchResult(data);
@@ -44,7 +44,7 @@ export default function Topbar() {
         <div className="topbarLeft">
           <Link to="/" style={{ textDecoration: "none" }} >
             <span className="logo">SociSync</span>
-            <span className="sublogo">BS</span>
+            <span className="sublogo">SS</span>
           </Link>
         </div>
         <div className="topbarCenter">
@@ -56,8 +56,8 @@ export default function Topbar() {
         </div>
         <div className="topbarRight">
           <div className="topbarLinks">
-            <span className="topbarLink">Homepage</span>
-            <span className="topbarLink">Timeline</span>
+            <Link to="/" style={{textDecoration:"none", color:"white"}} ><span className="topbarLink">Homepage</span></Link>
+            {/* <span className="topbarLink">Timeline</span> */}
           </div>
           <div className="topbarIcons">
             <div className="topbarIconItem">

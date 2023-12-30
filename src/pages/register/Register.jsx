@@ -96,7 +96,7 @@ const Register = () => {
         relationship: relationship.current.value,
       }
       try {
-        await axios.post("https://social-media-gfgj.onrender.com/api/auth/register", user);
+        await axios.post("https://sociosync.onrender.com/api/auth/register", user);
         history("/login");
       } catch (error) {
         console.log(error);
