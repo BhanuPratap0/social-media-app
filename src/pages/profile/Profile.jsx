@@ -11,14 +11,14 @@ import { AuthContext } from '../../context/AuthContext'
 
 const Profile = () => {
 
-    const [userProfile, setUserProfile] = useState({})
+    const [user, setUser] = useState({})
     const username = useParams().username;
     const {setSearchResult } = useContext(AuthContext)
 
     useEffect(() => {
         const fetchUser = async () => {
             const res = await axios.get(`https://social-media-gfgj.onrender.com/api/user?username=${username}`);
-            setUserProfile(res.data);
+            setUser(res.data);
         };
         fetchUser();
         setSearchResult([])
@@ -33,17 +33,17 @@ const Profile = () => {
                 <div className="profileRight">
                     <div className="profileRightTop">
                         <div className="profileCover">
-                            <img src={userProfile.coverPicture} alt="" className="profileCoverImg" />
-                            <img src={userProfile.profilePicture} alt="" className="profileUserImg" />
+                            <img src={user.coverPicture} alt="" className="profileCoverImg" />
+                            <img src={user.profilePicture} alt="" className="profileUserImg" />
                         </div>
                         <div className="profileInfo">
-                            <h4 className='profileInfoName' >{userProfile.username}</h4>
-                            <span className='profileInfoDesc' >{userProfile.desc}</span>
+                            <h4 className='profileInfoName' >{user.username}</h4>
+                            <span className='profileInfoDesc' >{user.desc}</span>
                         </div>
                     </div>
                     <div className="profileRightBottom">
                         <Feed username={username} />
-                        <Rightbar user={userProfile} />
+                        <Rightbar user={user} />
                     </div>
                 </div>
             </div>

@@ -23,7 +23,6 @@ const Login = () => {
       history("/")
   };
 
-  console.log(user);
 
   return (
     <div className='login'>
