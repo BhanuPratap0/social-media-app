@@ -6,6 +6,6 @@ export const loginCall = async (userCredentials, dispatch) => {
         const res = await axios.post("https://social-media-gfgj.onrender.com/api/auth/login", userCredentials);
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
     } catch (error) {
-        console.log("Wrong Password")
+        dispatch({ type: "LOGIN_FAILURE", payload: error });
     }
 }
