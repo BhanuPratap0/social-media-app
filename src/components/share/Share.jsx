@@ -98,6 +98,7 @@ const Share = () => {
     } catch (error) {
       console.log(error);
     }
+    setFile("");
 
   }
   
