@@ -5,13 +5,20 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import { format } from "timeago.js";
+import Snackbar from '@mui/joy/Snackbar';
+import { Alert } from '@mui/material'
 
 const Post = ({ post }) => {
 
+
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("");
+    const [toasttype, setToastType] = useState("success");
     const [like, setLike] = useState(post.likes.length);
     const [isLike, setIsLike] = useState(false);
     const [user, setUser] = useState({})
-    const { user: currentUser } = useContext(AuthContext);
+    const { user: currentUser, setPostChange } = useContext(AuthContext);
+    const [postDesc, setPostDesc] = useState(post.desc);
 
     useEffect(() => {
         setIsLike(post.likes.includes(currentUser._id));
@@ -22,9 +29,15 @@ const Post = ({ post }) => {
             setUser(res.data);
         };
         fetchUser();
+
     }, [post.userId])
 
-
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     const handleLike = () => {
 
@@ -39,19 +52,55 @@ const Post = ({ post }) => {
         setIsLike(!isLike);
     }
 
-    const handleDeletePost = async() => {
+    const handleDeletePost = async () => {
         try {
-          
-            await axios.delete("http://localhost:8800/api/post/"+ post._id + "/" + currentUser._id );
-            console.log("Deleted")
+            if (post.img) {
+                const imageUrlArray = post.img.split("/");
+                const image = imageUrlArray[imageUrlArray.length - 1];
+                const imagePublicId = image.split('.')[0];
+
+                const responce = await axios.delete("https://sociosync.onrender.com/api/post/delete-image/" + imagePublicId);
+                console.log(responce);
+            }
+
+            await axios.delete("https://sociosync.onrender.com/api/post/" + post._id + "/" + currentUser._id);
+
+            setMessage("Post Deleted")
+            setToastType("success")
+            setOpen(true);
+            setPostChange("change");
 
         } catch (error) {
             console.log("Error deleting post")
         }
+        setPostChange("")
+
     }
 
-    const handleUpdatePost = async(postId) =>{
+    const handleUpdatePost = async (description) => {
+        try {
 
+
+
+            await axios.put("https://sociosync.onrender.com/api/post/" + post._id,
+
+                {
+                    userId: currentUser._id,
+                    desc: postDesc
+                }
+            );
+            setMessage("Post Updated")
+            setToastType("success")
+            setOpen(true);
+            setPostChange("change");
+        } catch (error) {
+
+        }
+        setPostChange("");
+    }
+
+    const onChange = (e) => {
+        setPostDesc(e.target.value);
     }
 
     return (
@@ -67,14 +116,15 @@ const Post = ({ post }) => {
                         </span>
                         <span className="postDate">{format(post.createdAt)}</span>
                     </div>
-                    { currentUser._id === post.userId && <div className="postTopRight">
+                    {currentUser._id === post.userId && <div className="postTopRight">
                         <div class="dropdown">
                             <button class="btn post-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <MoreVert />
+                                <MoreVert />
                             </button>
                             <ul class="dropdown-menu">
                                 <li><button onClick={handleDeletePost} class="dropdown-item">Delete Post</button></li>
-                                <li><button onClick={handleUpdatePost} class="dropdown-item">Update Post</button></li>
+                                <li><button data-toggle="modal" data-target="#exampleModal" class="dropdown-item">Update Post</button></li>
+
                             </ul>
                         </div>
                     </div>}
@@ -94,7 +144,35 @@ const Post = ({ post }) => {
                     </div>
                 </div>
             </div>
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }} >
+                <Alert variant="filled" severity={toasttype} sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span>Update Post Description</span>
+                            <textarea className="form-control" onChange={onChange} value={postDesc} id="edescription" name="edescription" rows="3" minLength={5} required ></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" onClick={(e) => handleUpdatePost(e.target.value)} class="btn btn-primary" data-dismiss="modal">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
     )
 }
 

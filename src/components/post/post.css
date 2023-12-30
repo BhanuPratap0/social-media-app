@@ -93,3 +93,7 @@
     border: none !important;
 
 }
+.update-input{
+    border-radius: 5px;
+    width: 100%;
+}

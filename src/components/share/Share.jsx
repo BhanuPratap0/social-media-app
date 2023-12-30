@@ -20,13 +20,12 @@ const Share = () => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 
-  const { user:currentUser, setPostChange } = useContext(AuthContext);
+  const { user: currentUser, setPostChange } = useContext(AuthContext);
 
-  const[imageData,setImageData] = useState("");
+  const [imageData, setImageData] = useState("");
 
 
   const postPicture = async (pic) => {
@@ -52,7 +51,7 @@ const Share = () => {
           console.log("Cloudinary error:", error);
 
         });
-        setIsLoading(false);
+      setIsLoading(false);
     } else {
       setMessage("Invalid Image Type")
       setToastType("warning")
@@ -60,7 +59,7 @@ const Share = () => {
     }
   }
 
-  const deleteFile = async (e) =>{
+  const deleteFile = async (e) => {
     e.preventDefault();
     try {
       const responce = await axios.delete("https://sociosync.onrender.com/api/post/delete-image/" + imageData);
@@ -74,7 +73,7 @@ const Share = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (description=== "") {
+    if (description === "") {
       setMessage("Post Caption Can't be Empty")
       setToastType("warning")
       setOpen(true);
@@ -92,7 +91,7 @@ const Share = () => {
       setMessage("Post Uploaded")
       setToastType("success")
       setOpen(true);
-      setPostChange(newPost);
+      setPostChange("change");
       setDesc("");
     } catch (error) {
       console.log(error);
@@ -100,20 +99,20 @@ const Share = () => {
     setFile("");
 
   }
-  
-  
+
+
 
   return (
     <div className='share'>
       <div className="shareWrapper">
         <div className="shareTop">
           <img src={currentUser.profilePicture} alt="" className="shareProfileImg" />
-          <input value={description} onChange={(e)=> setDesc(e.target.value)} placeholder={"What's in your mind " + currentUser.username + "?"} type="text" className="shareInput" />
+          <input value={description} onChange={(e) => setDesc(e.target.value)} placeholder={"What's in your mind " + currentUser.username + "?"} type="text" className="shareInput" />
         </div>
         <hr className='shareHr' />
         {file && (
           <div className="shareImgContainer">
-            <img src={file} alt={file}  className="shareImg" />
+            <img src={file} alt={file} className="shareImg" />
             <Cancel className='shareCancelImg' onClick={deleteFile} />
           </div>
         )}
@@ -143,7 +142,7 @@ const Share = () => {
               <span className='shareOptionText' >Feelings</span>
             </div>
             <button type='submit' className="shareButton">
-              {isLoading? <CircularProgress style={{color:'white', height:"20px", width:"20px"}} /> : "Share"}
+              {isLoading ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} /> : "Share"}
             </button>
           </div>
         </form>
