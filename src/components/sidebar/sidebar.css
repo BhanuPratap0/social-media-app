@@ -44,6 +44,7 @@
 }
 
 .sidebarHr{
+    display: block;
     margin: 20px 0;
 }
 
@@ -57,7 +58,7 @@
 }
 @media only screen and (max-width: 600px){
     .sidebar{
-        flex: 2;
+        flex: 2.5;
     }
     .sidebarWrapper{
         padding: 0;
@@ -69,6 +70,9 @@
         display: none;
     }
     .sidebarButton{
+        display: none;
+    }
+    .sidebarHr{
         display: none;
     }
 }

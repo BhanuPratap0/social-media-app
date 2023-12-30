@@ -102,13 +102,13 @@ const Rightbar = ({ user }) => {
         <h4 className='rightbarTitle' >User Friends</h4>
         <div className="rightbarFollowings">
           {friends.length > 0 && friends.map((friend) => (
-            <Link to={"/profile/" + friend.username} style={{ textDecoration: "none" }} >
+            <Link to={"/profile/" + friend.username} style={{ textDecoration: "none", marginRight:"15px" }} >
               <div className="rightbarFollowing">
                 <img
                   src={friend.profilePicture}
                   alt=""
                   className="rightbarFollowingImg" />
-                <span style={{ color: "black" }} className="rightbarFollowingName">{friend.username}</span>
+                <span style={{ color: "black"}} className="rightbarFollowingName">{friend.username.substring(0,12)}</span>
               </div>
             </Link>
           ))}

@@ -1,18 +1,32 @@
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './login.css'
 import { loginCall } from '../../apiCalls';
 import { AuthContext } from '../../context/AuthContext';
 import { CircularProgress } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom';
+import Snackbar from '@mui/joy/Snackbar';
+import { Alert } from '@mui/material'
 
 const Login = () => {
 
+  
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [toasttype, setToastType] = useState("success");
   const email = useRef();
   const password = useRef();
-  const { isFetching, user, dispatch } = useContext(AuthContext);
+  const { isFetching, user, dispatch, error ,setLoginSuccess } = useContext(AuthContext);
 
 
   let history = useNavigate();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,8 +34,21 @@ const Login = () => {
       { email: email.current.value, password: password.current.value },
       dispatch
     );
-      history("/")
+    history("/")
   };
+  
+  useEffect(()=>{
+    if(error){
+      setMessage("Invalid Credentials")
+        setToastType("error")
+        setOpen(true);
+    }else{
+      setLoginSuccess(true);
+    }
+    if(user){
+      setLoginSuccess(true);
+    }
+  },[user])
 
 
   return (
@@ -56,6 +83,11 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}  anchorOrigin={{ vertical:"top", horizontal:"center" }} >
+        <Alert variant="filled" severity={toasttype} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }

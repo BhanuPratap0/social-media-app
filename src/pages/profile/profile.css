@@ -3,7 +3,7 @@
 }
 
 .profileRight{
-    flex: 9;
+    flex: 10;
 }
 
 .profileCover{
@@ -48,5 +48,29 @@
 
 .profileRightBottom{
     display: flex;
+
+}
+.mobile{
+    display: none;
+}
+.computer{
+    display: block;
+}
+@media only screen and (max-width: 600px){
+    
+    .profileRight{
+        flex: 23 !important;
+    }
+    .profileRightBottom{
+        flex-direction: column;
+    }
+    .mobile{
+        display: block;
+    }
+    .computer{
+        display: none;
+    }
+    
+
 }
 
