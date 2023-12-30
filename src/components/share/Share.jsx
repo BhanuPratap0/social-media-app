@@ -147,7 +147,7 @@ const Share = () => {
           </div>
         </form>
       </div>
-      <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={2500} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }} >
         <Alert variant="filled" severity={toasttype} sx={{ width: '100%' }}>
           {message}
         </Alert>
