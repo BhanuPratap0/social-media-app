@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
+import { format } from "timeago.js";
 
 const Post = ({post}) => {
 
@@ -49,7 +50,7 @@ const Post = ({post}) => {
                         <span className="postUsername">
                             {user.username}
                         </span>
-                        
+                        <span className="postDate">{format(post.createdAt)}</span>
                     </div>
                     <div className="postTopRight">
                         <MoreVert />
