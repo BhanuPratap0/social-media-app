@@ -63,8 +63,7 @@ const Share = () => {
   const deleteFile = async (e) =>{
     e.preventDefault();
     try {
-      
-      const responce = await axios.delete("https://sociosync.onrender.com/post/delete-image/" + imageData);
+      const responce = await axios.delete("https://sociosync.onrender.com/api/post/delete-image/" + imageData);
       console.log(responce);
       setFile("");
     } catch (error) {
