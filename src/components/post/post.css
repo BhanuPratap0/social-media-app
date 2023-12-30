@@ -77,3 +77,19 @@
     border-bottom: 1px dashed grey;
     font-size: 15px;
 }
+
+.post-button:hover {
+    background-color: rgb(180, 180, 180);
+    border: none !important;
+}
+
+.dropdown {
+    border-radius: 6px;
+}
+.post-button:focus{
+    border: none !important;
+}
+.post-button{ 
+    border: none !important;
+
+}

@@ -2,59 +2,82 @@ import { MoreVert } from '@mui/icons-material'
 import './post.css'
 import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import { format } from "timeago.js";
 
-const Post = ({post}) => {
+const Post = ({ post }) => {
 
     const [like, setLike] = useState(post.likes.length);
     const [isLike, setIsLike] = useState(false);
     const [user, setUser] = useState({})
-    const {user: currentUser} = useContext(AuthContext);
+    const { user: currentUser } = useContext(AuthContext);
 
-    useEffect(()=>{
+    useEffect(() => {
         setIsLike(post.likes.includes(currentUser._id));
     }, [currentUser._id, post.likes]);
     useEffect(() => {
-        const fetchUser = async() =>{
-          const res = await axios.get(`https://sociosync.onrender.com/api/user?userId=${post.userId}`);
-          setUser(res.data);
+        const fetchUser = async () => {
+            const res = await axios.get(`https://sociosync.onrender.com/api/user?userId=${post.userId}`);
+            setUser(res.data);
         };
         fetchUser();
-      },[post.userId])
+    }, [post.userId])
 
-    
+
 
     const handleLike = () => {
 
         try {
-            axios.put("https://sociosync.onrender.com/api/post/" + post._id + "/like", {userId: currentUser._id});
+            axios.put("https://sociosync.onrender.com/api/post/" + post._id + "/like", { userId: currentUser._id });
+            console.log("Liked")
         } catch (error) {
-            
+
         }
 
-        setLike(isLike ? like-1 : like + 1)
+        setLike(isLike ? like - 1 : like + 1)
         setIsLike(!isLike);
     }
 
-   
+    const handleDeletePost = async() => {
+        try {
+          
+            await axios.delete("http://localhost:8800/api/post/"+ post._id + "/" + currentUser._id );
+            console.log("Deleted")
+
+        } catch (error) {
+            console.log("Error deleting post")
+        }
+    }
+
+    const handleUpdatePost = async(postId) =>{
+
+    }
+
     return (
         <div className='post' >
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
                         <Link to={`/profile/${user.username}`}>
-                        <img src={ user.profilePicture} alt="" className="postProfileImg" />
+                            <img src={user.profilePicture} alt="" className="postProfileImg" />
                         </Link>
                         <span className="postUsername">
                             {user.username}
                         </span>
                         <span className="postDate">{format(post.createdAt)}</span>
                     </div>
-                    <div className="postTopRight">
-                        <MoreVert />
-                    </div>
+                    { currentUser._id === post.userId && <div className="postTopRight">
+                        <div class="dropdown">
+                            <button class="btn post-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <MoreVert />
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><button onClick={handleDeletePost} class="dropdown-item">Delete Post</button></li>
+                                <li><button onClick={handleUpdatePost} class="dropdown-item">Update Post</button></li>
+                            </ul>
+                        </div>
+                    </div>}
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post?.desc}</span>
