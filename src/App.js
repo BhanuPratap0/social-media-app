@@ -6,6 +6,7 @@ import Register from "./pages/register/Register";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import './App.css'
+import Admin from "./pages/adminPanel/Admin";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Route exact path="/login" element={<Login />} ></Route>
       <Route exact path="/register" element={<Register />} ></Route>
       <Route exact path="/profile/:username" element={<Profile />} ></Route>
+      <Route exact path="/admin" element={ user?.isAdmin ? <Admin />: <Navigate to={"/"} />} ></Route>
     </Routes>
   );
 }

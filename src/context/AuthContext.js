@@ -15,6 +15,7 @@ export const AuthContextProvider = ({ children }) => {
     const [searchResult, setSearchResult] = useState([]);
     const [followingArray, setFollowingsArray] = useState([]);
     const [postChange, setPostChange] = useState();
+    const [userChange, setUserChange] = useState();
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE)
 
     
@@ -31,6 +32,8 @@ export const AuthContextProvider = ({ children }) => {
             isFetching: state.isFetching,
             error: state.error,
             dispatch,
+            userChange, 
+            setUserChange
         }} >
             {children}
         </AuthContext.Provider>

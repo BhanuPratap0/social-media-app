@@ -1,6 +1,18 @@
 const router = require("express").Router();
 const User = require('../models/User')
 const bcrypt = require('bcrypt');
+
+router.get("/getall", async(req,res)=>{
+    try {
+        User.find({}).then(function (users) {
+            res.send(users);
+        })
+    } catch (error) {
+        res.send(error);
+    }
+})
+
+
 //update user
 router.put("/:id", async (req, res) => {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -26,8 +38,8 @@ router.put("/:id", async (req, res) => {
 });
 
 //delete user
-router.delete("/:id", async (req, res) => {
-    if (req.body.userId === req.params.id || req.body.isAdmin) {
+router.delete("/:id/:isAdmin", async (req, res) => {
+    if (req.params.isAdmin) {
         try {
             const user = await User.findByIdAndDelete(req.params.id);
             res.status(200).json("Account deleted successfully")

@@ -91,7 +91,7 @@ const Share = () => {
       setMessage("Post Uploaded")
       setToastType("success")
       setOpen(true);
-      setPostChange("change");
+      setPostChange("posted");
       setDesc("");
     } catch (error) {
       console.log(error);
