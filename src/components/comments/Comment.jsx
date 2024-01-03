@@ -11,7 +11,6 @@ const Comment = ({ comment, postUserId }) => {
     useEffect(() => {
         const fetchUser = async () => {
             const res = await axios.get(`https://sociosync.onrender.com/api/user?userId=${comment.userId}`);
-
             setUserData(res.data);
         }
         fetchUser();
@@ -21,6 +20,7 @@ const Comment = ({ comment, postUserId }) => {
         try {
             setPostChange("Comment Deleted")
             const res = await axios.delete(`https://sociosync.onrender.com/api/post/deletecomment/${comment._id}/${comment.userId}`)
+
         } catch (error) {
             console.log("Error deleting comment")
         }

@@ -22,6 +22,11 @@ const Post = ({ post }) => {
     const [postDesc, setPostDesc] = useState(post.desc);
     const [comments, setComments] = useState([]);
     const [commentText, setcommentText] = useState("");
+  
+
+ 
+
+
 
     const onChangeComment = (e) =>{
         setcommentText(e.target.value);
@@ -178,11 +183,11 @@ const Post = ({ post }) => {
                         <span className="postCommentText"> {comments.length} Comments</span>
                     </div>
                 </div>
-            <div className='comments-section'>
+            {comments!=null && <div  className='comments-section'>
                 {comments?.map((comment) => {
                     return <Comment key={comment._id} postUserId={post.userId} comment={comment} />
                 })}
-            </div>
+            </div>}
             <form className='commentBox' onSubmit={handleComment}>
                 <input onChange={onChangeComment} value={commentText} className='commentInput' type='text' placeholder='Enter Your Comment' />
                 <button className='commentButton' >{isLoading? <CircularProgress style={{color:'white', height:"20px", width:"20px"}} /> : "Post"}</button>
