@@ -173,6 +173,7 @@
     .serachUserContainer {
         margin-left: 10px !important;
         background-color: #1876f2c9 !;
+        z-index: 999;
     }
 
 }
