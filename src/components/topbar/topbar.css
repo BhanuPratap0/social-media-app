@@ -171,9 +171,9 @@
     }
 
     .serachUserContainer {
-        display: block;
-        margin-left: 10px;
-        background-color: #1876f2c9;
+        display: block !important;
+        margin-left: 10px !important;
+        background-color: #1876f2c9 !important;
     }
 
 }
