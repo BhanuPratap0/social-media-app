@@ -52,8 +52,9 @@ const Share = () => {
 
     // Make API call to OpenWeatherMap
     const {data}  = await axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=+${longitude}&localityLanguage=en`);
-    console.log(data.city);
-    setWeather(data.city);
+    console.log(data);
+    setWeather(data.city + "," + data.principalSubdivision);
+
 
   }
 

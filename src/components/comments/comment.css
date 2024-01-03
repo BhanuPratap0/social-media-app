@@ -1,0 +1,40 @@
+.comment{
+
+    display: flex;
+    justify-content: space-between;
+}
+.commentWrapper{
+    display: flex;
+    margin: 2px 20px 0 20px;
+}
+.comment-user-pic{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right:7px;
+    margin-left:5px;
+    margin-top: 2px;
+}
+
+.commentBody{
+    display: flex;
+    flex-direction: column;
+}
+.commentTime{
+    font-weight: 300;
+    font-size: 12px;
+}
+.commentText{
+    font-weight: 500 ;
+}
+.post-button{
+    background-color: white;
+    outline: none !important;
+}
+.post-button:hover{
+    background-color: white;
+}
+.post-button:focus{
+    outline: none !important;
+    border: none !important;
+} 

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Post = require('../models/Post')
 const User = require('../models/User')
+const Comments = require('../models/Comments');
 var cloudinary = require('cloudinary').v2;
 
 
@@ -126,6 +127,39 @@ router.get("/profile/:username", async (req, res) => {
 
 })
 
+//post a comment 
+router.post("/comments", async (req, res) => {
+    const newComment = new Comments(req.body);
+    try {
+        const savedComment = await newComment.save();
+        res.status(200).json(savedComment);
+    } catch (error) {
+        res.status(500).json("Error posting comment")
+    }
+})
 
+//fetch comments
+
+router.get("/getcomments/:postId", async(req,res) => {
+    try {
+        const allComments = await Comments.find({postId : req.params.postId});
+        res.status(200).json(allComments)
+    } catch (error) {
+        res.status(400).json('Error fetching comments')        
+    }
+})
+
+//delete comment
+router.delete("/deletecomment/:id/:userId", async(req,res) => {
+    try {
+        const comment = await Comments.findById(req.params.id);
+        if(comment.userId == req.params.userId){
+            await comment.deleteOne();
+            res.status(200).json("Comment Deleted")
+        }
+    } catch (error) {
+        res.status(500).json("Error deleting comment")
+    }
+})
 
 module.exports = router;

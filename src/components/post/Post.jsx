@@ -1,24 +1,44 @@
 import { MoreVert } from '@mui/icons-material'
 import './post.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import { format } from "timeago.js";
 import Snackbar from '@mui/joy/Snackbar';
-import { Alert } from '@mui/material'
+import { Alert, CircularProgress } from '@mui/material'
+import Comment from '../comments/Comment'
 
 const Post = ({ post }) => {
 
-
+    const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [toasttype, setToastType] = useState("success");
     const [like, setLike] = useState(post.likes.length);
     const [isLike, setIsLike] = useState(false);
     const [user, setUser] = useState({})
-    const { user: currentUser, setPostChange } = useContext(AuthContext);
+    const { user: currentUser, postChange, setPostChange } = useContext(AuthContext);
     const [postDesc, setPostDesc] = useState(post.desc);
+    const [comments, setComments] = useState([]);
+    const [commentText, setcommentText] = useState("");
+
+    const onChangeComment = (e) =>{
+        setcommentText(e.target.value);
+    }
+
+    const handleComment = async(e) => {
+        setIsLoading(true);
+        e.preventDefault();
+        const res = await axios.post(`https://sociosync.onrender.com/api/post/comments`, {
+            userId: currentUser._id,
+            postId: post._id,
+            desc: commentText
+        });
+        console.log(res);
+        setIsLoading(false);
+        setcommentText("")
+    }
 
     useEffect(() => {
         setIsLike(post.likes.includes(currentUser._id));
@@ -30,7 +50,14 @@ const Post = ({ post }) => {
         };
         fetchUser();
 
-    }, [post.userId])
+        const fetchComments = async () => {
+            const res = await axios.get(`https://sociosync.onrender.com/api/post/getcomments/${post._id}`);
+ 
+            setComments(res.data);
+        }
+        fetchComments();
+
+    }, [postChange,isLoading,post.userId])
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -103,6 +130,8 @@ const Post = ({ post }) => {
         setPostDesc(e.target.value);
     }
 
+    
+
     return (
         <div className='post' >
             <div className="postWrapper">
@@ -114,20 +143,26 @@ const Post = ({ post }) => {
                         <span className="postUsername">
                             {user.username}
                         </span>
-                        <span className="postDate">{format(post.createdAt)}</span>
+                        <div className='desktop-div' >
+                            <span className="postDate">{format(post.createdAt)}</span>
+                            <span className="postDate">{post.location}</span>
+                        </div>
                     </div>
                     {currentUser._id === post.userId && <div className="postTopRight">
                         <div class="dropdown">
-                            <button class="btn post-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="post-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <MoreVert />
                             </button>
                             <ul class="dropdown-menu">
                                 <li><button onClick={handleDeletePost} class="dropdown-item">Delete Post</button></li>
                                 <li><button data-toggle="modal" data-target="#exampleModal" class="dropdown-item">Update Post</button></li>
-
                             </ul>
                         </div>
                     </div>}
+                </div>
+                <div className='mobile-div' >
+                    <span className="postDate">{format(post.createdAt)}</span>
+                    <span className="postDate">{post.location}</span>
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post?.desc}</span>
@@ -143,6 +178,15 @@ const Post = ({ post }) => {
                         <span className="postCommentText">{post.comment} Comments</span>
                     </div>
                 </div>
+            <div className='comments-section'>
+                {comments?.map((comment) => {
+                    return <Comment key={comment._id} postUserId={post.userId} comment={comment} />
+                })}
+            </div>
+            <form className='commentBox' onSubmit={handleComment}>
+                <input onChange={onChangeComment} value={commentText} className='commentInput' type='text' placeholder='Enter Your Comment' />
+                <button className='commentButton' >{isLoading? <CircularProgress style={{color:'white', height:"20px", width:"20px"}} /> : "Post"}</button>
+            </form>
             </div>
             <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }} >
                 <Alert variant="filled" severity={toasttype} sx={{ width: '100%' }}>
