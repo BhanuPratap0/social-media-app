@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './admin.css'
 import axios from 'axios'
-import { Button } from '@mui/material';
+
 import UserRow from './UserRow';
 import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -23,9 +23,6 @@ const Admin = () => {
         }
         fetchAllUser();
     }, [userChange])
-
-
-
 
     return (
         <div className='admin'>
