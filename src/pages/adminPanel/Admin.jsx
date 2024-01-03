@@ -5,16 +5,17 @@ import { Button } from '@mui/material';
 import UserRow from './UserRow';
 import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
 const Admin = () => {
 
-    const {user: currentUser,userChange} = useContext(AuthContext);
+    const { user: currentUser, userChange } = useContext(AuthContext);
 
     const [allUsers, setAllUsrs] = useState([]);
     let count = 1;
     useEffect(() => {
         const fetchAllUser = async () => {
             try {
-                const res = await axios.get("http://localhost:8800/api/user/getall");
+                const res = await axios.get("https://sociosync.onrender.com/api/user/getall");
                 setAllUsrs(res.data);
             } catch (error) {
                 console.log(error);
@@ -23,13 +24,17 @@ const Admin = () => {
         fetchAllUser();
     }, [userChange])
 
-    
+
 
 
     return (
         <div className='admin'>
             <div className="topbar-head">
-                <Link to="/" style={{textDecoration:"none"}} ><span className="logo">SociSync</span></Link>
+                <Link to="/" style={{ textDecoration: "none" }} ><span className="logo">SociSync</span></Link>
+                <div className="topbarLinks">
+                    <Link to="/" style={{ textDecoration: "none", color: "white" }} ><h3> <HomeIcon fontSize='large' /> </h3></Link>
+                    {/* <span className="topbarLink">Timeline</span> */}
+                </div>
                 <h1 className='adminLogo' >Admin Panel</h1>
 
             </div>
@@ -49,7 +54,7 @@ const Admin = () => {
                             return <tr>
                                 <td>{count++}</td>
                                 <UserRow key={user._id} user={user} />
-                                </tr>
+                            </tr>
                         })}
                     </tbody>
                 </table>

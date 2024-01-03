@@ -1,5 +1,6 @@
 import { Bookmark, Chat, Event, Group, HelpOutline, PlayCircleFilledOutlined, RssFeed, School, WorkOutline } from '@mui/icons-material'
 import './sidebar.css'
+import { Link } from 'react-router-dom'
 // import CloseFriend from '../closeFriend/CloseFriend'
 
 
@@ -10,7 +11,7 @@ const Sidebar = () => {
         <ul className="sidebarList">
           <li className="sidebarListItem">
             <RssFeed className='sidebarIcon' />
-            <span className="sidebarListItemText">Feed</span>
+            <Link to={'/'} style={{textDecoration:"none", color:"black"}} ><span className="sidebarListItemText">Feed</span></Link>
           </li>
           <li className="sidebarListItem">
             <Chat className='sidebarIcon' />
@@ -20,7 +21,7 @@ const Sidebar = () => {
             <PlayCircleFilledOutlined className='sidebarIcon' />
             <span className="sidebarListItemText">Videos</span>
           </li>
-          <li className="sidebarListItem">
+          {/* <li className="sidebarListItem">
             <Group className='sidebarIcon' />
             <span className="sidebarListItemText">Groups</span>
           </li>
@@ -43,9 +44,9 @@ const Sidebar = () => {
           <li className="sidebarListItem">
             <School className='sidebarIcon' />
             <span className="sidebarListItemText">Courses</span>
-          </li>
+          </li> */}
         </ul>
-        <button className="sidebarButton">Show More</button>
+        {/* <button className="sidebarButton">Show More</button> */}
         <hr className='sidebarHr'/>
         {/* <ul className="sidebarFriendList">
           { Users.map(u=>(

@@ -21,7 +21,7 @@ export default function Topbar() {
     } else {
       setIsLoading(true);
       try {
-        const { data } = await axios.get(`https://sociosync.onrender.com/api/user/searchUsers?search=${query}`, { userId: user._id });
+        const { data } = await axios.get(`http://localhost:8800/api/user/searchUsers?search=${query}&userId=${user._id}`);
         console.log(data);
         setIsLoading(false);
         setSearchResult(data);
@@ -82,6 +82,7 @@ export default function Topbar() {
             </button>
             <ul class="dropdown-menu">
               <li><Link class="dropdown-item" to={`/profile/${user.username}`} >Profile</Link></li>
+              { user.isAdmin &&  <li><Link class="dropdown-item" to={`/admin`} >Admin Panel</Link></li>}
               <li><button onClick={logoutHandler} class="dropdown-item" href="#">Logout</button></li>
             </ul>
           </div>

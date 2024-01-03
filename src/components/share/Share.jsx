@@ -9,7 +9,62 @@ import { CircularProgress } from '@mui/material'
 
 
 
+
+
+
 const Share = () => {
+  
+  //get location of the user
+  const [location, setLocation] = useState(null);
+  const [weather, setWeather] = useState(null);
+  const [display, setDisplay] = useState("none")
+
+  const locationDisplay = () =>{
+    if(display === "none"){
+      setDisplay("block")
+    } else {
+      setDisplay("none")
+    }
+  }
+  
+  const locOnChange = (e) =>{
+    setWeather(e.target.value);
+  }
+
+  function handleLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error, { enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,});
+      
+    } else {
+      console.log("Geolocation not supported");
+    }
+  }
+  
+
+  const  success = async(position) => {
+    const latitude = position.coords.latitude ;
+    const longitude = position.coords.longitude ;
+    setLocation({ latitude, longitude });
+    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+    console.log(`More or less ${position.coords.accuracy} meters.`);
+
+    // Make API call to OpenWeatherMap
+    const {data}  = await axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=+${longitude}&localityLanguage=en`);
+    console.log(data.city);
+    setWeather(data.city);
+
+  }
+
+  function error() {
+    console.log("Unable to retrieve your location");
+  }
+
+  //get user location api endsss
+
+
+
   const [description, setDesc] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -29,11 +84,15 @@ const Share = () => {
 
 
   const postPicture = async (pic) => {
-    if (pic === undefined) {
+
+    if (pic === undefined || pic.size>5288304) {
+      setMessage("File size should be 5 mb or less")
+      setToastType("warning")
+      setOpen(true);
       return;
     }
 
-    if (pic.type === "image/jpeg" || pic.type === "image/png" || pic.type === "image/jpg") {
+    if (pic.type === "image/jpeg" || pic.type === "image/png" || pic.type === "image/jpg" || pic.type === "video/mp4" ) {
       setIsLoading(true);
       const data = new FormData();
       data.append("file", pic);
@@ -105,9 +164,14 @@ const Share = () => {
   return (
     <div className='share'>
       <div className="shareWrapper">
+        
         <div className="shareTop">
           <img src={currentUser.profilePicture} alt="" className="shareProfileImg" />
-          <input value={description} onChange={(e) => setDesc(e.target.value)} placeholder={"What's in your mind " + currentUser.username + "?"} type="text" className="shareInput" />
+         <input value={description} onChange={(e) => setDesc(e.target.value)} placeholder={"What's in your mind " + currentUser.username + "?"} type="text" className="shareInput" />  
+        </div>
+        <div className="location-section">
+          <input className="Location" style={{display:`${display}`}} type='text' placeholder='Your Location' value={weather} onChange={locOnChange} />
+          <button style={{display:`${display}`}} onClick={handleLocationClick} >Current Loc</button>
         </div>
         <hr className='shareHr' />
         {file && (
@@ -125,7 +189,7 @@ const Share = () => {
                 style={{ display: "none" }}
                 type="file"
                 id='file'
-                accept='.png,.jpg,.jpeg'
+                accept='.png,.jpg,.jpeg,.mp4'
                 onChange={(e) => postPicture(e.target.files[0])}
               />
             </label>
@@ -133,9 +197,9 @@ const Share = () => {
               <Label htmlColor='blue' className='shareIcon' />
               <span className='shareOptionText' >Tag</span>
             </div>
-            <div className="shareOption">
+            <div className="shareOption" onClick={locationDisplay}>
               <Room htmlColor='green' className='shareIcon' />
-              <span className='shareOptionText' >Location</span>
+              <span  className='shareOptionText' >Location</span>
             </div>
             <div className="shareOption">
               <EmojiEmotions htmlColor='goldenrod' className='shareIcon' />

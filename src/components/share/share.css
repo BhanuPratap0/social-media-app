@@ -12,6 +12,23 @@
     display: flex;
     align-items: center;
 }
+.Location{
+    margin-left: 62px;
+    border: none;
+    width: 80%;
+}
+.location-section{
+    display: flex;
+}
+.Location:focus{
+    outline: none;
+}
+.location-section button{
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    width: 20%;
+}
 
 .shareProfileImg{
     width: 50px;
@@ -95,5 +112,8 @@
 @media only screen and (max-width: 600px){
     .shareOptionText{
         display: none;
+    }
+    .location-section button{
+        width: 49.5%;
     }
 }
