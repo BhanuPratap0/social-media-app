@@ -21,7 +21,7 @@ export default function Topbar() {
     } else {
       setIsLoading(true);
       try {
-        const { data } = await axios.get(`http://localhost:8800/api/user/searchUsers?search=${query}&userId=${user._id}`);
+        const { data } = await axios.get(`https://sociosync.onrender.com/api/user/searchUsers?search=${query}&userId=${user._id}`);
         console.log(data);
         setIsLoading(false);
         setSearchResult(data);
