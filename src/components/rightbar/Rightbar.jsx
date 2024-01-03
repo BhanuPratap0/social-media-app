@@ -9,7 +9,7 @@ import { Add, Remove } from '@mui/icons-material';
 const Rightbar = ({ user }) => {
 
   const [friends, setFriends] = useState([]);
-  const { user:currentUser, dispatch } = useContext(AuthContext);
+  const { user:currentUser, dispatch,followingArray } = useContext(AuthContext);
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
 
   useEffect(() => {
@@ -43,10 +43,12 @@ const Rightbar = ({ user }) => {
       if (followed) {
         await axios.put(`https://sociosync.onrender.com/api/user/${user._id}/unfollow`, { userId: currentUser._id });
         dispatch({ type: "UNFOLLOW", payload: user._id });
+        
 
       } else {
         await axios.put(`https://sociosync.onrender.com/api/user/${user._id}/follow`, { userId: currentUser._id });
         dispatch({ type: "FOLLOW", payload: user._id });
+        console.log(followingArray);
       }
     } catch (error) {
       console.log(error);

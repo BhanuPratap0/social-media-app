@@ -102,7 +102,7 @@ export default function Topbar() {
                     <span className="serachUserAbout" >{result.city} | {result.relationship}</span>
                   </div>
                 </div>
-                {followingArray.includes(result._id) ? "" : <PersonAddAltIcon />}
+                {user.followings.includes(result._id) ? "" : <PersonAddAltIcon />}
               </div>
               </Link>
             }
