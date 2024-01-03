@@ -43,7 +43,7 @@ export default function Topbar() {
       <div className="topbarContainer">
         <div className="topbarLeft">
           <Link to="/" style={{ textDecoration: "none" }} >
-            <span className="logo">SociSync</span>
+            <span className="logo">SocioSync</span>
             <span className="sublogo">SS</span>
           </Link>
         </div>

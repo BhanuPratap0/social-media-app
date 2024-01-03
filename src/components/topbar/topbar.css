@@ -163,7 +163,7 @@
     }
 
     .logo {
-        display: none;
+        display: none !important;
     }
 
     .sublogo {

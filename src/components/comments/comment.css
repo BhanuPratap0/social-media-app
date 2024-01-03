@@ -1,5 +1,4 @@
 .comment{
-
     display: flex;
     justify-content: space-between;
 }
@@ -8,6 +7,7 @@
     margin: 2px 20px 0 20px;
 }
 .comment-user-pic{
+    object-fit: cover;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -38,3 +38,18 @@
     outline: none !important;
     border: none !important;
 } 
+
+@media only screen and (max-width: 600px){
+    .commentWrapper{
+        display: flex;
+        margin: 0;
+    }
+    .comment-user-pic{
+        margin-right:7px;
+        margin-left:0px;
+    }
+    .commentText{
+        font-weight: 500 ;
+        font-size: 14px;
+    }
+}

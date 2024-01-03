@@ -175,7 +175,7 @@ const Post = ({ post }) => {
                         <span className="postLikeCounter">{like} people like it</span>
                     </div>
                     <div className="postBottomRight">
-                        <span className="postCommentText">{post.comment} Comments</span>
+                        <span className="postCommentText"> {comments.length} Comments</span>
                     </div>
                 </div>
             <div className='comments-section'>

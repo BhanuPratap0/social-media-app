@@ -107,10 +107,14 @@
 }
 
 .comments-section{
+    max-height: 190px !important;
+    overflow-x: scroll;
     display: flex;
     flex-direction: column;
+    margin-top: 9px;
 }
 .commentBox{
+   
     width: 100%;
     height: 30px;
     margin: 0 20px 0 20px;
@@ -156,5 +160,8 @@
     }
     .desktop-div{
         display: none;
+    }
+    .commentInput{
+        width: 70%;
     }
 }
