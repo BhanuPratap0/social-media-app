@@ -1,6 +1,6 @@
 import { Cancel, EmojiEmotions, Label, PermMedia, Room } from '@mui/icons-material'
 import './share.css'
-import { useContext, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
 import Snackbar from '@mui/joy/Snackbar';
@@ -18,7 +18,7 @@ const Share = () => {
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
   const [display, setDisplay] = useState("none")
-
+  const locationRef = useRef();
   const locationDisplay = () =>{
     if(display === "none"){
       setDisplay("block")
@@ -142,7 +142,8 @@ const Share = () => {
     const newPost = {
       userId: currentUser._id,
       desc: description,
-      img: file
+      img: file,
+      location: locationRef.current.value,
     }
 
     try {
@@ -170,7 +171,7 @@ const Share = () => {
          <input value={description} onChange={(e) => setDesc(e.target.value)} placeholder={"What's in your mind " + currentUser.username + "?"} type="text" className="shareInput" />  
         </div>
         <div className="location-section">
-          <input className="Location" style={{display:`${display}`}} type='text' placeholder='Your Location' value={weather} onChange={locOnChange} />
+          <input ref={locationRef} className="Location" style={{display:`${display}`}} type='text' placeholder='Your Location' value={weather} onChange={locOnChange} />
           <button style={{display:`${display}`}} onClick={handleLocationClick} >Current Loc</button>
         </div>
         <hr className='shareHr' />
