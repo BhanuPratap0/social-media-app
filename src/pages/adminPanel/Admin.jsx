@@ -26,11 +26,10 @@ const Admin = () => {
 
     return (
         <div className='admin'>
-            <div className="topbar-head">
-                <Link to="/" style={{ textDecoration: "none" }} ><span className="logo">SociSync</span></Link>
-                <div className="topbarLinks">
+            <div className="topbar-head-admin">
+                
+                <div className="topbarLinks-admin">
                     <Link to="/" style={{ textDecoration: "none", color: "white" }} ><h3> <HomeIcon fontSize='large' /> </h3></Link>
-                    {/* <span className="topbarLink">Timeline</span> */}
                 </div>
                 <h1 className='adminLogo' >Admin Panel</h1>
 

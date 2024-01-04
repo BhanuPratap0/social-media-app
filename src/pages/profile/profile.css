@@ -49,15 +49,17 @@
 
 .profileRightBottom{
     display: flex;
-    margin: 0 10px 0 10px;
+    
 }
 
 
 .mobile{
     display: none;
+    margin: 0 10px 0 10px;
 }
 .computer{
     display: block;
+    margin: 0 10px 0 10px;
 }
 @media only screen and (max-width: 600px){
     

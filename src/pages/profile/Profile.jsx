@@ -13,7 +13,7 @@ const Profile = () => {
 
     const [user, setUser] = useState({})
     const username = useParams().username;
-    const {setSearchResult } = useContext(AuthContext)
+    const { setSearchResult } = useContext(AuthContext)
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -22,8 +22,8 @@ const Profile = () => {
         };
         fetchUser();
         setSearchResult([])
-        
-    },[username])
+
+    }, [username])
 
     return (
         <>
@@ -42,10 +42,10 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className="profileRightBottom">
-                    <div className="mobile"><Rightbar user={user} /></div> 
+                        <div className="mobile"><Rightbar user={user} /></div>
                         <Feed username={username} />
-                       <div className="computer"><Rightbar user={user} /></div> 
-                      
+                        <div className="computer"><Rightbar user={user} /></div>
+
                     </div>
                 </div>
             </div>

@@ -178,7 +178,7 @@
 
     .topbarLinks {
         font-size: 14px;
-        display: none;
+        display: none !important;
     }
 
     .logo {

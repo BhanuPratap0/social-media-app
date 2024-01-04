@@ -1,8 +1,9 @@
-.adminWrapper{
+.adminWrapper {
     overflow-x: scroll;
     margin: 30px;
 }
-.topbar-head{
+
+.topbar-head-admin {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -12,35 +13,40 @@
     color: black;
 }
 
-.adminLogo{
+.adminLogo {
     margin-right: 20px;
     font-weight: bold;
 }
 
-.DialogContent{
+.DialogContent {
     width: 30rem;
 }
 
 @media only screen and (max-width: 600px) {
-    .topbar-head{
-        justify-content: space-around;
+    .topbar-head {
+        justify-content: space-between;
         display: flex;
-        flex-direction: column;
         align-items: center;
     }
-    .logo{
+
+    .logo {
         display: block;
         margin-left: 0;
     }
-    .adminLogo{
-        margin-right: 0;
+
+    .adminLogo {
+        margin-right: 0 !important;
     }
-    
-.DialogContent{
-    width: 20rem;
-}
+
+    .DialogContent {
+        width: 20rem;
+    }
+
+    .topbarLinks {
+        display: block;
+    }
 }
 
-.update-input{
+.update-input {
     display: flex;
 }
