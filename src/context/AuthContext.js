@@ -16,6 +16,8 @@ export const AuthContextProvider = ({ children }) => {
     const [followingArray, setFollowingsArray] = useState([]);
     const [postChange, setPostChange] = useState();
     const [userChange, setUserChange] = useState();
+    // const host = "http://localhost:8800";
+    const host = "https://social-media-gfgj.onrender.com";
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE)
 
     
@@ -33,7 +35,8 @@ export const AuthContextProvider = ({ children }) => {
             error: state.error,
             dispatch,
             userChange, 
-            setUserChange
+            setUserChange,
+            host
         }} >
             {children}
         </AuthContext.Provider>

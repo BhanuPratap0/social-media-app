@@ -79,7 +79,7 @@ const Share = () => {
     setOpen(false);
   };
 
-  const { user: currentUser, setPostChange } = useContext(AuthContext);
+  const { user: currentUser, setPostChange, host } = useContext(AuthContext);
 
   const [imageData, setImageData] = useState("");
 
@@ -122,7 +122,7 @@ const Share = () => {
   const deleteFile = async (e) => {
     e.preventDefault();
     try {
-      const responce = await axios.delete("https://sociosync.onrender.com/api/post/delete-image/" + imageData);
+      const responce = await axios.delete(`${host}/api/post/delete-image/` + imageData);
       console.log(responce);
       setFile("");
     } catch (error) {
@@ -148,7 +148,7 @@ const Share = () => {
     }
 
     try {
-      await axios.post("https://sociosync.onrender.com/api/post/", newPost);
+      await axios.post(`${host}/api/post/`, newPost);
       setMessage("Post Uploaded")
       setToastType("success")
       setOpen(true);

@@ -9,13 +9,13 @@ import { Add, Remove } from '@mui/icons-material';
 const Rightbar = ({ user }) => {
 
   const [friends, setFriends] = useState([]);
-  const { user:currentUser, dispatch,followingArray } = useContext(AuthContext);
+  const { user:currentUser, dispatch,followingArray, host } = useContext(AuthContext);
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("https://sociosync.onrender.com/api/user/friends/" + user?._id);
+        const friendList = await axios.get(`${host}/api/user/friends/` + user?._id);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error)
@@ -28,7 +28,7 @@ const Rightbar = ({ user }) => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("https://sociosync.onrender.com/api/user/friends/" + currentUser._id);
+        const friendList = await axios.get(`${host}/api/user/friends/` + currentUser._id);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error)
@@ -41,12 +41,12 @@ const Rightbar = ({ user }) => {
   const followHandler = async () => {
     try {
       if (followed) {
-        await axios.put(`https://sociosync.onrender.com/api/user/${user._id}/unfollow`, { userId: currentUser._id });
+        await axios.put(`${host}/api/user/${user._id}/unfollow`, { userId: currentUser._id });
         dispatch({ type: "UNFOLLOW", payload: user._id });
         
 
       } else {
-        await axios.put(`https://sociosync.onrender.com/api/user/${user._id}/follow`, { userId: currentUser._id });
+        await axios.put(`${host}/api/user/${user._id}/follow`, { userId: currentUser._id });
         dispatch({ type: "FOLLOW", payload: user._id });
         console.log(followingArray);
       }

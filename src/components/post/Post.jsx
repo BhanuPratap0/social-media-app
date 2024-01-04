@@ -18,7 +18,7 @@ const Post = ({ post }) => {
     const [like, setLike] = useState(post.likes.length);
     const [isLike, setIsLike] = useState(false);
     const [user, setUser] = useState({})
-    const { user: currentUser, postChange, setPostChange } = useContext(AuthContext);
+    const { user: currentUser, postChange, setPostChange, host } = useContext(AuthContext);
     const [postDesc, setPostDesc] = useState(post.desc);
     const [comments, setComments] = useState([]);
     const [commentText, setcommentText] = useState("");
@@ -35,7 +35,7 @@ const Post = ({ post }) => {
     const handleComment = async(e) => {
         setIsLoading(true);
         e.preventDefault();
-        const res = await axios.post(`https://sociosync.onrender.com/api/post/comments`, {
+        const res = await axios.post(`${host}/api/post/comments`, {
             userId: currentUser._id,
             postId: post._id,
             desc: commentText
@@ -50,13 +50,13 @@ const Post = ({ post }) => {
     }, [currentUser._id, post.likes]);
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get(`https://sociosync.onrender.com/api/user?userId=${post.userId}`);
+            const res = await axios.get(`${host}/api/user?userId=${post.userId}`);
             setUser(res.data);
         };
         fetchUser();
 
         const fetchComments = async () => {
-            const res = await axios.get(`https://sociosync.onrender.com/api/post/getcomments/${post._id}`);
+            const res = await axios.get(`${host}/api/post/getcomments/${post._id}`);
  
             setComments(res.data);
         }
@@ -74,7 +74,7 @@ const Post = ({ post }) => {
     const handleLike = () => {
 
         try {
-            axios.put("https://sociosync.onrender.com/api/post/" + post._id + "/like", { userId: currentUser._id });
+            axios.put(`${host}/api/post/` + post._id + "/like", { userId: currentUser._id });
             console.log("Liked")
         } catch (error) {
 
@@ -91,11 +91,11 @@ const Post = ({ post }) => {
                 const image = imageUrlArray[imageUrlArray.length - 1];
                 const imagePublicId = image.split('.')[0];
 
-                const responce = await axios.delete("https://sociosync.onrender.com/api/post/delete-image/" + imagePublicId);
+                const responce = await axios.delete(`${host}/api/post/delete-image/` + imagePublicId);
                 console.log(responce);
             }
 
-            await axios.delete("https://sociosync.onrender.com/api/post/" + post._id + "/" + currentUser._id);
+            await axios.delete(`${host}/api/post/` + post._id + "/" + currentUser._id);
 
             setMessage("Post Deleted")
             setToastType("success")
@@ -114,7 +114,7 @@ const Post = ({ post }) => {
 
 
 
-            await axios.put("https://sociosync.onrender.com/api/post/" + post._id,
+            await axios.put(`${host}/api/post/` + post._id,
 
                 {
                     userId: currentUser._id,

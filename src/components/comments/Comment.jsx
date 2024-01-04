@@ -6,11 +6,11 @@ import { MoreVert } from '@mui/icons-material';
 import { AuthContext } from '../../context/AuthContext';
 
 const Comment = ({ comment, postUserId }) => {
-    const { user, postChange, setPostChange } = useContext(AuthContext);
+    const { user, postChange, setPostChange, host } = useContext(AuthContext);
     const [userData, setUserData] = useState([]);
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get(`https://sociosync.onrender.com/api/user?userId=${comment.userId}`);
+            const res = await axios.get(`${host}/api/user?userId=${comment.userId}`);
             setUserData(res.data);
         }
         fetchUser();
@@ -19,7 +19,7 @@ const Comment = ({ comment, postUserId }) => {
     const handleDeleteComment = async () => {
         try {
             setPostChange("Comment Deleted")
-            const res = await axios.delete(`https://sociosync.onrender.com/api/post/deletecomment/${comment._id}/${comment.userId}`)
+            const res = await axios.delete(`${host}/api/post/deletecomment/${comment._id}/${comment.userId}`)
 
         } catch (error) {
             console.log("Error deleting comment")

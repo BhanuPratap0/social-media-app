@@ -43,7 +43,7 @@ const Profile = () => {
                     </div>
                     <div className="profileRightBottom">
                         <div className="mobile"><Rightbar user={user} /></div>
-                        <Feed username={username} />
+                        <div className="feed-div"> <Feed username={username} /></div>
                         <div className="computer"><Rightbar user={user} /></div>
 
                     </div>

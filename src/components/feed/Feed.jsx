@@ -9,12 +9,12 @@ import { AuthContext } from '../../context/AuthContext';
 const Feed = ({ username }) => {
 
   const [posts, setPosts] = useState([]);
-  const { user, postChange } = useContext(AuthContext);
+  const { user, postChange, host } = useContext(AuthContext);
   useEffect(() => {
     const fetchPost = async () => {
       const res = username
-        ? await axios.get("https://sociosync.onrender.com/api/post/profile/" + username)
-        : await axios.get("https://sociosync.onrender.com/api/post/timeline/" + user._id);
+        ? await axios.get(`${host}/api/post/profile/` + username)
+        : await axios.get(`${host}/api/post/timeline/` + user._id);
       setPosts(res.data.sort((p1, p2) => {
         return new Date(p2.createdAt) - new Date(p1.createdAt);
       }));

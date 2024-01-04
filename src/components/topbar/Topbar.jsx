@@ -12,7 +12,7 @@ export default function Topbar() {
 
 
   const [isLoading, setIsLoading] = useState(false);
-  const { user, followingArray, searchResult, setSearchResult } = useContext(AuthContext)
+  const { user, followingArray, searchResult, setSearchResult,host } = useContext(AuthContext)
 
   const searchUser = async (query) => {
     if (!query) {
@@ -21,7 +21,7 @@ export default function Topbar() {
     } else {
       setIsLoading(true);
       try {
-        const { data } = await axios.get(`https://sociosync.onrender.com/api/user/searchUsers?search=${query}&userId=${user._id}`);
+        const { data } = await axios.get(`${host}/api/user/searchUsers?search=${query}&userId=${user._id}`);
         console.log(data);
         setIsLoading(false);
         setSearchResult(data);
