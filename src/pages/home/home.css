@@ -1,3 +1,11 @@
 .homeContainer{
     display: flex;
 }
+.rightbar-home{
+    flex: 3.5
+}
+@media only screen and (max-width: 600px){
+    .rightbar-home{
+        display: none;
+    }
+}

@@ -43,8 +43,8 @@ export default function Topbar() {
       <div className="topbarContainer">
         <div className="topbarLeft">
           <Link to="/" style={{ textDecoration: "none" }} >
-            <span className="logo">SocioSync</span>
-            <span className="sublogo">SS</span>
+            <span><img className="logo" src={require('../images/newlogo.png')} /></span>
+            <span ><img className="sublogo" src={require('../images/mob-logo.png')} /></span>
           </Link>
         </div>
         <div className="topbarCenter">
@@ -61,15 +61,15 @@ export default function Topbar() {
           </div>
           <div className="topbarIcons">
             <div className="topbarIconItem">
-              <Person />
+              <Person style={{height:"30px", width:"30px"}} />
               <span className="topbarIconBadge">1</span>
             </div>
             <div className="topbarIconItem">
-              <Chat />
+              <Chat style={{height:"30px", width:"30px"}} />
               <span className="topbarIconBadge">1</span>
             </div>
             <div className="topbarIconItem">
-              <Notifications />
+              <Notifications style={{height:"30px", width:"30px"}} />
               <span className="topbarIconBadge">1</span>
             </div>
           </div>

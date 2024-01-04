@@ -8,6 +8,7 @@
 
 @media only screen and (max-width: 600px){
     .feed{
-        flex: 9;
+        flex: 12;
+        width: 100%;
     }
 }

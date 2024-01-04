@@ -38,7 +38,7 @@ export default function Home() {
       <div className="homeContainer">
         <Sidebar />
         <Feed />
-        <Rightbar />
+        <div className="rightbar-home"><Rightbar /></div>
         <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}  anchorOrigin={{ vertical:"top", horizontal:"center" }} >
         <Alert variant="filled" severity={toasttype} sx={{ width: '100%' }}>
           {message}

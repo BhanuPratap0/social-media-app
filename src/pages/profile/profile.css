@@ -9,6 +9,7 @@
 .profileCover{
     height: 320px;
     position: relative;
+
 }
 
 .profileCoverImg{
@@ -48,8 +49,10 @@
 
 .profileRightBottom{
     display: flex;
-
+    margin: 0 10px 0 10px;
 }
+
+
 .mobile{
     display: none;
 }
@@ -58,9 +61,7 @@
 }
 @media only screen and (max-width: 600px){
     
-    .profileRight{
-        flex: 23 !important;
-    }
+   
     .profileRightBottom{
         flex-direction: column;
     }
