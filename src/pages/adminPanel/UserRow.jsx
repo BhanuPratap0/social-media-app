@@ -43,7 +43,7 @@ const UserRow = ({ user, count }) => {
     const handleUpdateUser = async () => {
         if (newPassword !== user.password) {
             try {
-                await axios.put("http://localhost:8800/api/user/" + user._id,
+                await axios.put("https://sociosync.onrender.com/api/user/" + user._id,
                     {
                         userId: user._id,
                         password: newPassword,
