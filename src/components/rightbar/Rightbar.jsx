@@ -15,7 +15,7 @@ const Rightbar = ({ user }) => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get(`${host}/api/user/friends/` + user?._id);
+        const friendList = await axios.get(`https://sociosync.onrender.com/api/user/friends/` + user?._id);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error)
@@ -28,7 +28,7 @@ const Rightbar = ({ user }) => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get(`${host}/api/user/friends/` + currentUser._id);
+        const friendList = await axios.get(`https://sociosync.onrender.com/api/user/friends/` + currentUser._id);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error)

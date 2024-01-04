@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
     const [postChange, setPostChange] = useState();
     const [userChange, setUserChange] = useState();
     // const host = "http://localhost:8800";
-    const host = "https://social-media-gfgj.onrender.com";
+    const host = "https://sociosync.onrender.com";
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE)
 
     
