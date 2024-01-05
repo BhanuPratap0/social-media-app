@@ -204,7 +204,7 @@ const Profile = () => {
                                                 <label for="cover" className="form-label">New Cover Picture</label>
                                                 {isLoading ? <CircularProgress style={{ color: 'black', height: "20px", width: "20px" }} /> : <input type="file" className="form-control" id="cover" onChange={(e) => postCoverPicture(e.target.files[0])} />}
                                             </div>
-                                            <div className="mb-3">
+                                            {/* <div className="mb-3">
                                                 <label for="exampleInputPassword1" className="form-label">New Password</label>
                                                 <div className="update-input">
                                                     <input type={passType} className="form-control" id="exampleInputPassword1" />
@@ -217,7 +217,7 @@ const Profile = () => {
                                                     <input type={passType} className="form-control" id="exampleInputPassword1" />
                                                     <Button onClick={handlePassType} >{showPass}</Button>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </form>
                                     </DialogContentText>
                                 </DialogContent>
