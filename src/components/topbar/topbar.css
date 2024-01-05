@@ -1,7 +1,7 @@
 .topbarContainer {
     height: 60px;
     width: 100%;
-    background-color: #1877f2;
+    background-color: #142d4c;
     display: flex;
     align-items: center;
     position: sticky;
@@ -117,7 +117,7 @@
     align-items: center;
     z-index: 99;
     position: fixed;
-    background-color: #1877f2;
+    background-color: #142d4c;
     width: 350px;
     margin-left: 390px;
     padding: 10px;
@@ -159,6 +159,9 @@
 }
 
 @media only screen and (max-width: 600px) {
+    .searchInput {
+        height: 20px;
+    }
     .topbarImg {
         height: 32px;
         width: 32px;
@@ -204,7 +207,7 @@
 }
 
 .profile-button:hover {
-    background-color: #1877f2;
+    background-color: #142d4c;
     border: none !important;
 }
 

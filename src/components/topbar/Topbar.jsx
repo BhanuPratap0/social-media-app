@@ -1,7 +1,7 @@
 import { Chat, Notifications, Person, Search } from "@mui/icons-material"
 import "./topbar.css"
 import { Link, useNavigate } from "react-router-dom"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import axios from "axios"
 import { CircularProgress } from "@mui/material"
@@ -12,7 +12,7 @@ export default function Topbar() {
 
 
   const [isLoading, setIsLoading] = useState(false);
-  const { user, followingArray, searchResult, setSearchResult,host } = useContext(AuthContext)
+  const { user, searchResult, setSearchResult,host } = useContext(AuthContext)
 
   const searchUser = async (query) => {
     if (!query) {
@@ -43,14 +43,14 @@ export default function Topbar() {
       <div className="topbarContainer">
         <div className="topbarLeft">
           <Link to="/" style={{ textDecoration: "none" }} >
-            <span><img className="logo" src={require('../images/newlogo.png')} /></span>
-            <span ><img className="sublogo" src={require('../images/mob-logo.png')} /></span>
+            <span><img className="logo" src={require('../images/newlogo.png')} alt={require('../images/newlogo.png')} /></span>
+            <span ><img className="sublogo" src={require('../images/mob-logo.png')} alt={require('../images/mob-logo.png')} /></span>
           </Link>
         </div>
         <div className="topbarCenter">
           <div className="searchbar">
             <Search className="searchIcon" />
-            <input onChange={(e) => searchUser(e.target.value)} placeholder="Search for friend, post or video" className="searchInput" />
+            <input id="searchFriends" onChange={(e) => searchUser(e.target.value)} placeholder="Search for friend" className="searchInput" />
           </div>
 
         </div>
@@ -74,16 +74,16 @@ export default function Topbar() {
             </div>
           </div>
 
-          <div class="dropdown">
-            <button class="btn profile-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <div className="dropdown">
+            <button className="btn profile-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
               <Link >
-                <img src={user.profilePicture} alt="" className="topbarImg" />
+                <img src={user.profilePicture} alt={user.profilePicture} className="topbarImg" />
               </Link>
             </button>
-            <ul class="dropdown-menu">
-              <li><Link class="dropdown-item" to={`/profile/${user.username}`} >Profile</Link></li>
-              { user.isAdmin &&  <li><Link class="dropdown-item" to={`/admin`} >Admin Panel</Link></li>}
-              <li><button onClick={logoutHandler} class="dropdown-item" href="#">Logout</button></li>
+            <ul className="dropdown-menu">
+              <li><Link className="dropdown-item" to={`/profile/${user.username}`} >Profile</Link></li>
+              { user.isAdmin &&  <li><Link className="dropdown-item" to={`/admin`} >Admin Panel</Link></li>}
+              <li><button onClick={logoutHandler} className="dropdown-item" href="#">Logout</button></li>
             </ul>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 const Admin = () => {
 
-    const { user: currentUser, userChange } = useContext(AuthContext);
+    const { userChange } = useContext(AuthContext);
 
     const [allUsers, setAllUsrs] = useState([]);
     let count = 1;

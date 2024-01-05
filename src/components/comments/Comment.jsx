@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
 import './comment.css'
 import axios from 'axios'
-import { format } from "timeago.js";
+
 import { MoreVert } from '@mui/icons-material';
 import { AuthContext } from '../../context/AuthContext';
+import ReactTimeago from 'react-timeago';
 
 const Comment = ({ comment, postUserId }) => {
-    const { user, postChange, setPostChange, host } = useContext(AuthContext);
+    const { user, setPostChange, host } = useContext(AuthContext);
     const [userData, setUserData] = useState([]);
     useEffect(() => {
         const fetchUser = async () => {
@@ -14,13 +15,13 @@ const Comment = ({ comment, postUserId }) => {
             setUserData(res.data);
         }
         fetchUser();
-    }, [comment._id])
+    }, [comment._id, host, comment.userId])
 
     const handleDeleteComment = async () => {
         try {
             setPostChange("Comment Deleted")
-            const res = await axios.delete(`${host}/api/post/deletecomment/${comment._id}/${comment.userId}`)
-
+            await axios.delete(`${host}/api/post/deletecomment/${comment._id}/${comment.userId}`)
+            
         } catch (error) {
             console.log("Error deleting comment")
         }
@@ -30,19 +31,19 @@ const Comment = ({ comment, postUserId }) => {
     return (
         <div className='comment' >
             <div className="commentWrapper">
-                <img className='comment-user-pic' src={userData.profilePicture} />
+                <img className='comment-user-pic' src={userData.profilePicture} alt={userData.profilePicture}/>
                 <div className='commentBody' >
                     <span>{userData.username}</span>
                     <span className='commentText' >{comment.desc}</span>
-                    <span className='commentTime' >{format(comment.createdAt)}</span>
+                    <span className='commentTime' ><ReactTimeago date={comment.createdAt} /></span>
                 </div>
             </div>
-            {(user._id === comment.userId || postUserId === user._id) && <div class="dropdown">
-                <button class="post-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {(user._id === comment.userId || postUserId === user._id) && <div className="dropdown">
+                <button className="post-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <MoreVert />
                 </button>
-                <ul class="dropdown-menu">
-                    <li><button onClick={handleDeleteComment} class="dropdown-item">Delete Comment</button></li>
+                <ul className="dropdown-menu">
+                    <li><button onClick={handleDeleteComment} className="dropdown-item">Delete Comment</button></li>
                 </ul>
             </div>}
         </div>

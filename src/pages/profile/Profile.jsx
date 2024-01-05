@@ -8,8 +8,8 @@ import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import EditIcon from '@mui/icons-material/Edit';
-import { Alert, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, TextField } from '@mui/material'
-import { useNumberInput } from '@chakra-ui/react'
+import { Alert, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar } from '@mui/material'
+
 
 
 
@@ -18,18 +18,17 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
     const [message, setMessage] = useState("");
-    const [toasttype, setToastType] = useState("");
+    const [toasttype, setToastType] = useState("success");
     const [user, setUser] = useState({})
     const username = useParams().username;
-    const {user:currentuser ,setSearchResult,setUserChange,userChange,dispatch ,host } = useContext(AuthContext);
+    const { user: currentuser, setUserChange, userChange, dispatch, host } = useContext(AuthContext);
     const [userInf, setUserInf] = useState({ username: "", desc: "", profilePicture: "", coverPicture: "" });
     const [passType, setPassType] = useState("password");
     const [showPass, setShowPass] = useState("Show");
     let history = useNavigate()
-    
+
 
     const [open, setOpen] = useState(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -64,7 +63,7 @@ const Profile = () => {
             await axios.post("https://api.cloudinary.com/v1_1/dns2pagvz/image/upload", data)
                 .then((response) => {
                     console.log("Couldinary Response: ", response);
-                    setUserInf({ profile: response.data.url.toString() });
+                    setUserInf({ ...userInf, profilePicture: response.data.url.toString() });
                 })
                 .catch((error) => {
                     console.log("Cloudinary error:", error);
@@ -93,7 +92,7 @@ const Profile = () => {
             await axios.post("https://api.cloudinary.com/v1_1/dns2pagvz/image/upload", data)
                 .then((resp) => {
                     console.log("Couldinary Response: ", resp);
-                    setUserInf({ cover: resp.data.url.toString() });
+                    setUserInf({ ...userInf, coverPicture: resp.data.url.toString() });
                 })
                 .catch((error) => {
                     console.log("Cloudinary error:", error);
@@ -107,33 +106,42 @@ const Profile = () => {
         }
     }
 
-    const handleUpdateUser = async() => {
-       
-            try {
-                await axios.put(`${host}/api/user/` + user._id,
-                    {
-                        userId: user._id,
-                        desc: userInf.desc,
-                        username: userInf.username,
-                        profilePicture: userInf.profilePicture,
-                        coverPicture:   useNumberInput.coverPicture,
-                    }
-                )
-                dispatch({ type: "UPDATE", payload: userInf.username });
+    const handleUpdateUser = async () => {
 
-                setMessage("Profile Updated")
-                setToastType("success")
-                setOpenAlert(true);
-                setOpen(false);
-                setUserChange("Updated")
-                history(`/profile/${userInf.username}`)
+        if (user.profilePicture !== userInf.profilePicture) {
+            deleteCloudPicture(user.profilePicture);
+        }
+        if (user.coverPicture !== userInf.coverPicture) {
+            deleteCloudPicture(user.coverPicture);
+        }
 
-            } catch (error) {
-                console.log("Error updating user")
-            }
-            setUserChange("")
+        try {
+            await axios.put(`${host}/api/user/` + user._id,
+                {
+                    userId: user._id,
+                    desc: userInf.desc,
+                    username: userInf.username,
+                    profilePicture: userInf.profilePicture,
+                    coverPicture: userInf.coverPicture,
+                }
+            )
+            dispatch({ type: "UPDATE", payload: userInf.username });
+            dispatch({ type: "PROFILEPICTURE", payload: userInf.profilePicture });
+
+            setUserChange("Updated")
+            setMessage("Profile Updated")
+            setToastType("success")
+            setOpenAlert(true);
+            setOpen(false);
+            console.log(userInf.username)
+            history(`/profile/${userInf.username}`)
+
+        } catch (error) {
+            console.log("Error updating user")
+        }
+        setUserChange("")
     }
-    
+
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -142,9 +150,9 @@ const Profile = () => {
             setUserInf(res.data);
         };
         fetchUser();
-        setSearchResult([])
+ 
 
-    }, [userChange ,username])
+    }, [host,userChange, username])
 
     const handlePassType = () => {
         if (showPass === "Show") {
@@ -173,40 +181,40 @@ const Profile = () => {
                         <div className="profileInfo">
                             <h4 className='profileInfoName' >{user.username}</h4>
                             <span className='profileInfoDesc' >{user.desc}</span>
-                            { currentuser._id==user._id && <button onClick={handleClickOpen} className='editProfile' >Edit Profile<EditIcon fontSize='small' style={{ marginBottom: "3px" }} /></button>}
+                            {currentuser._id === user._id && <button onClick={handleClickOpen} className='editProfile' >Edit Profile<EditIcon fontSize='small' style={{ marginBottom: "3px" }} /></button>}
 
                             <Dialog open={open} onClose={handleClose}>
                                 <DialogTitle>Update Profile</DialogTitle>
                                 <DialogContent className='DialogContent' >
                                     <DialogContentText>
                                         <form>
-                                            <div class="mb-3">
-                                                <label for="username" class="form-label">Username</label>
-                                                <input name='username' value={userInf.username} type="text" class="form-control" id="username" onChange={onChange} />
+                                            <div className="mb-3">
+                                                <label for="username" className="form-label">Username</label>
+                                                <input name='username' value={userInf.username} type="text" className="form-control" id="username" onChange={onChange} />
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="desc" class="form-label">Description</label>
-                                                <textarea name='desc' onChange={onChange} value={userInf.desc} type="text" class="form-control" id="desc" />
+                                            <div className="mb-3">
+                                                <label for="desc" className="form-label">Description</label>
+                                                <textarea name='desc' onChange={onChange} value={userInf.desc} type="text" className="form-control" id="desc" />
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="profile" class="form-label">New Profile Picture</label>
-                                                {isLoading ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} /> : <input type="file" class="form-control" id="profile" onChange={(e) => postProfilePicture(e.target.files[0])} />}
+                                            <div className="mb-3">
+                                                <label for="profile" className="form-label">New Profile Picture</label>
+                                                {isLoading ? <CircularProgress style={{ color: 'black', height: "20px", width: "20px" }} /> : <input type="file" className="form-control" id="profile" onChange={(e) => postProfilePicture(e.target.files[0])} />}
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="cover" class="form-label">New Cover Picture</label>
-                                                {isLoading ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} /> : <input type="file" class="form-control" id="cover" onChange={(e) => postCoverPicture(e.target.files[0])} />}
+                                            <div className="mb-3">
+                                                <label for="cover" className="form-label">New Cover Picture</label>
+                                                {isLoading ? <CircularProgress style={{ color: 'black', height: "20px", width: "20px" }} /> : <input type="file" className="form-control" id="cover" onChange={(e) => postCoverPicture(e.target.files[0])} />}
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="exampleInputPassword1" class="form-label">New Password</label>
+                                            <div className="mb-3">
+                                                <label for="exampleInputPassword1" className="form-label">New Password</label>
                                                 <div className="update-input">
-                                                    <input type={passType} class="form-control" id="exampleInputPassword1" />
+                                                    <input type={passType} className="form-control" id="exampleInputPassword1" />
                                                     <Button onClick={handlePassType} >{showPass}</Button>
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="exampleInputPassword1" class="form-label">Confirm New Password</label>
+                                            <div className="mb-3">
+                                                <label for="exampleInputPassword1" className="form-label">Confirm New Password</label>
                                                 <div className="update-input">
-                                                    <input type={passType} class="form-control" id="exampleInputPassword1" />
+                                                    <input type={passType} className="form-control" id="exampleInputPassword1" />
                                                     <Button onClick={handlePassType} >{showPass}</Button>
                                                 </div>
                                             </div>

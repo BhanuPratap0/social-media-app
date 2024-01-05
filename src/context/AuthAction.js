@@ -25,3 +25,7 @@
    type:"UPDATE",
    payload: username,
  });
+ export const Profile = (profilePicture) => ({
+   type:"PROFILEPICTURE",
+   payload: profilePicture,
+ });

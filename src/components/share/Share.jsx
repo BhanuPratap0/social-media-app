@@ -16,7 +16,7 @@ const Share = () => {
   
   //get location of the user
   const [location, setLocation] = useState(null);
-  const [weather, setWeather] = useState(null);
+  const [weather, setWeather] = useState("");
   const [display, setDisplay] = useState("none")
   const locationRef = useRef();
   const locationDisplay = () =>{
@@ -71,7 +71,7 @@ const Share = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [toasttype, setToastType] = useState("success");
-  const [file, setFile] = useState();
+  const [file, setFile] = useState("");
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;

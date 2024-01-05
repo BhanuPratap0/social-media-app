@@ -6,6 +6,30 @@
     padding: 20px;
 }
 
+.welcomeText{
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    align-items: center;
+    text-align: center;
+}
+.welcomeImage{
+    width: 90px;
+    height: 90px;
+}
+
+.welcomeTextBottom{
+    font-weight: 300;
+    color: grey;
+}
+.addFriends{
+    background-color: #142d4c;
+    color:white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 @media only screen and (max-width: 600px){
     .feed{
         width: 100%;

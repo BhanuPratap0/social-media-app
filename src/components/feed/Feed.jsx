@@ -27,9 +27,16 @@ const Feed = ({ username }) => {
     <div className='feed'>
       <div className="feedWrapper">
         {(!username || username === user.username) && <Share />}
-        {posts.map((p) => (
-          <Post key={p._id} post={p} />
-        ))}
+        {posts.length == 0
+          ? <div className='welcomeText' >
+            <h1>Welcome to <span style={{ color: "#005792" }} >SocioSync</span></h1>
+            <img className='welcomeImage' src={require('../images/home.png')} />
+            <span className='welcomeTextBottom' >When you follow people you will see their photos and videos here.</span>
+            <label for="searchFriends" ><span className='addFriends' >Search Friends</span></label>
+          </div>
+          : posts.map((p) => (
+            <Post key={p._id} post={p} />
+          ))}
       </div>
 
     </div>

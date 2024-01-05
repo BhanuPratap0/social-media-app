@@ -43,6 +43,14 @@ const AuthReducer = (state, action) => {
             username: action.payload,
           },
         };
+        case "PROFILEPICTURE":
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            profilePicture: action.payload,
+          },
+        };
         
       default:
         return state;

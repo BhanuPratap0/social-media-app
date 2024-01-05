@@ -30,7 +30,7 @@ export default function Home() {
       setOpen(true);
       setLoginSuccess(false);
     }
-  },[])
+  },[loginSuccess,setLoginSuccess])
 
   return (
     <>

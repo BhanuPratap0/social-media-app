@@ -118,7 +118,7 @@ const Register = () => {
     <div className='register'>
       <div className="RegisterWrapper">
         <div className="loginLeft">
-          <h3 className='loginLogo' >SociSync</h3>
+          <h3 className='loginLogo' >SocioSync</h3>
           <span className="loginDesc">Connect with friends and the world around you on Bhanusocial</span>
         </div>
         <div className="loginRight">

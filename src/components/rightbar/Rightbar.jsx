@@ -13,16 +13,19 @@ const Rightbar = ({ user }) => {
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
 
   useEffect(() => {
-    const getFriends = async () => {
-      try {
-        const friendList = await axios.get(`https://sociosync.onrender.com/api/user/friends/` + user?._id);
-        setFriends(friendList.data);
-      } catch (error) {
-        console.log(error)
-      }
-    };
-    getFriends();
-    setFollowed(currentUser.followings.includes(user?._id))
+    if(user?._id){
+
+      const getFriends = async () => {
+        try {
+          const friendList = await axios.get(`https://sociosync.onrender.com/api/user/friends/` + user?._id);
+          setFriends(friendList.data);
+        } catch (error) {
+          console.log(error)
+        }
+      };
+      getFriends();
+      setFollowed(currentUser.followings.includes(user?._id))
+    }
   }, [user?._id]);
 
   useEffect(() => {
@@ -104,7 +107,7 @@ const Rightbar = ({ user }) => {
         <h4 className='rightbarTitle' >User Friends</h4>
         <div className="rightbarFollowings">
           {friends.length > 0 && friends.map((friend) => (
-            <Link to={"/profile/" + friend.username} style={{ textDecoration: "none", marginRight:"15px" }} >
+            <Link key={friend._id} to={"/profile/" + friend.username} style={{ textDecoration: "none", marginRight:"15px" }} >
               <div className="rightbarFollowing">
                 <img
                   src={friend.profilePicture}

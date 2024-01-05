@@ -1,13 +1,14 @@
 import { MoreVert } from '@mui/icons-material'
 import './post.css'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
-import { format } from "timeago.js";
+
 import Snackbar from '@mui/joy/Snackbar';
 import { Alert, CircularProgress } from '@mui/material'
 import Comment from '../comments/Comment'
+import ReactTimeago from 'react-timeago'
 
 const Post = ({ post }) => {
 
@@ -62,7 +63,7 @@ const Post = ({ post }) => {
         }
         fetchComments();
 
-    }, [postChange,isLoading,post.userId])
+    }, [postChange,isLoading,post.userId,host,post._id])
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -149,24 +150,24 @@ const Post = ({ post }) => {
                             {user.username}
                         </span>
                         <div className='desktop-div' >
-                            <span className="postDate">{format(post.createdAt)}</span>
+                            <span className="postDate"><ReactTimeago date={post.createdAt} /></span>
                             <span className="postDate">{post.location}</span>
                         </div>
                     </div>
                     {currentUser._id === post.userId && <div className="postTopRight">
-                        <div class="dropdown">
-                            <button class="post-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div className="dropdown">
+                            <button className="post-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <MoreVert />
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><button onClick={handleDeletePost} class="dropdown-item">Delete Post</button></li>
-                                <li><button data-toggle="modal" data-target="#exampleModal" class="dropdown-item">Update Post</button></li>
+                            <ul className="dropdown-menu">
+                                <li><button onClick={handleDeletePost} className="dropdown-item">Delete Post</button></li>
+                                <li><button data-toggle="modal" data-target="#exampleModal" className="dropdown-item">Update Post</button></li>
                             </ul>
                         </div>
                     </div>}
                 </div>
                 <div className='mobile-div' >
-                    <span className="postDate">{format(post.createdAt)}</span>
+                    <span className="postDate"><ReactTimeago date={post.createdAt} /></span>
                     <span className="postDate">{post.location}</span>
                 </div>
                 <div className="postCenter">
@@ -175,12 +176,12 @@ const Post = ({ post }) => {
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                        <img src={require(`../images/like.png`)} alt="" className="likeIcon" onClick={handleLike} />
-                        <img src={require(`../images/heart.png`)} alt="" className="likeIcon" onClick={handleLike} />
+                        { isLike ? <img src={require(`../images/like.png`)} alt="" className="likeIcon" onClick={handleLike} />:
+                        <img src={require(`../images/heart.png`)} alt="" className="likeIcon" onClick={handleLike} />}
                         <span className="postLikeCounter">{like} people like it</span>
                     </div>
                     <div className="postBottomRight">
-                        <span className="postCommentText"> {comments.length} Comments</span>
+                        <span className="postCommentText"> {comments.length ===1 ? (`${comments.length} Comment`) : (`${comments.length} Comments`)}</span>
                     </div>
                 </div>
             {comments!=null && <div  className='comments-section'>
@@ -199,22 +200,22 @@ const Post = ({ post }) => {
                 </Alert>
             </Snackbar>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update Post</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Update Post</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <span>Update Post Description</span>
                             <textarea className="form-control" onChange={onChange} value={postDesc} id="edescription" name="edescription" rows="3" minLength={5} required ></textarea>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" onClick={(e) => handleUpdatePost(e.target.value)} class="btn btn-primary" data-dismiss="modal">Update</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" onClick={(e) => handleUpdatePost(e.target.value)} className="btn btn-primary" data-dismiss="modal">Update</button>
                         </div>
                     </div>
                 </div>
