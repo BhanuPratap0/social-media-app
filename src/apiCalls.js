@@ -12,4 +12,4 @@ export const loginCall = async (userCredentials, dispatch) => {
     } catch (error) {
         dispatch({ type: "LOGIN_FAILURE", payload: error });
     }
-}s
+}
