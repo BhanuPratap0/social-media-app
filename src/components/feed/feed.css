@@ -13,6 +13,7 @@
     margin-top: 40px;
     align-items: center;
     text-align: center;
+    width: 45vw;
 }
 .welcomeImage{
     width: 90px;
@@ -32,6 +33,9 @@
 
 @media only screen and (max-width: 600px){
     .feed{
+        width: 100%;
+    }
+    .welcomeText{
         width: 100%;
     }
 }

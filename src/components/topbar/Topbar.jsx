@@ -1,7 +1,7 @@
 import { Chat, Notifications, Person, Search } from "@mui/icons-material"
 import "./topbar.css"
 import { Link, useNavigate } from "react-router-dom"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import axios from "axios"
 import { CircularProgress } from "@mui/material"
@@ -13,6 +13,11 @@ export default function Topbar() {
 
   const [isLoading, setIsLoading] = useState(false);
   const { user, searchResult, setSearchResult,host } = useContext(AuthContext)
+
+  useEffect(()=>{
+    setSearchResult([]);
+  },[])
+
 
   const searchUser = async (query) => {
     if (!query) {

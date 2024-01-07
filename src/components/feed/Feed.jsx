@@ -9,12 +9,14 @@ import { AuthContext } from '../../context/AuthContext';
 const Feed = ({ username }) => {
 
   const [posts, setPosts] = useState([]);
+  const [postLength, setPostLength] = useState("1");
   const { user, postChange, host } = useContext(AuthContext);
   useEffect(() => {
     const fetchPost = async () => {
       const res = username
         ? await axios.get(`${host}/api/post/profile/` + username)
         : await axios.get(`${host}/api/post/timeline/` + user._id);
+      setPostLength(res.data.length);
       setPosts(res.data.sort((p1, p2) => {
         return new Date(p2.createdAt) - new Date(p1.createdAt);
       }));
@@ -27,7 +29,15 @@ const Feed = ({ username }) => {
     <div className='feed'>
       <div className="feedWrapper">
         {(!username || username === user.username) && <Share />}
-        {posts.length == 0
+
+        {username && postLength == 0  &&
+          <div className='welcomeText' >          
+            <img className='welcomeImage' src={require('../images/camera.png')} />
+            <span style={{fontSize:"30px"}} className='welcomeTextBottom' >No Posts Yet</span>
+          </div>
+          }
+
+        {postLength == 0 && !username
           ? <div className='welcomeText' >
             <h1>Welcome to <span style={{ color: "#005792" }} >SocioSync</span></h1>
             <img className='welcomeImage' src={require('../images/home.png')} />

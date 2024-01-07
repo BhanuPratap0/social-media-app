@@ -14,7 +14,7 @@ import { Alert, Button, CircularProgress, Dialog, DialogActions, DialogContent, 
 
 
 const Profile = () => {
-
+    const [isPageLoading, setIsPageLoading] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
     const [message, setMessage] = useState("");
@@ -22,7 +22,7 @@ const Profile = () => {
     const [user, setUser] = useState({})
     const username = useParams().username;
     const { user: currentuser, setUserChange, userChange, dispatch, host } = useContext(AuthContext);
-    const [userInf, setUserInf] = useState({ username: "", desc: "", profilePicture: "", coverPicture: "" });
+    const [userInf, setUserInf] = useState({ username: "", desc: "", profilePicture: "", coverPicture: "", relationship: "" });
     const [passType, setPassType] = useState("password");
     const [showPass, setShowPass] = useState("Show");
     let history = useNavigate()
@@ -123,6 +123,7 @@ const Profile = () => {
                     username: userInf.username,
                     profilePicture: userInf.profilePicture,
                     coverPicture: userInf.coverPicture,
+                    relationship: userInf.relationship
                 }
             )
             dispatch({ type: "UPDATE", payload: userInf.username });
@@ -150,9 +151,9 @@ const Profile = () => {
             setUserInf(res.data);
         };
         fetchUser();
- 
+        setIsPageLoading(false);
 
-    }, [host,userChange, username])
+    }, [host, userChange, username])
 
     const handlePassType = () => {
         if (showPass === "Show") {
@@ -166,10 +167,12 @@ const Profile = () => {
     const onChange = (e) => {
         setUserInf({ ...userInf, [e.target.name]: e.target.value })
     }
+    
 
     return (
         <>
             <Topbar />
+
             <div className="profile">
                 <Sidebar />
                 <div className="profileRight">
@@ -195,6 +198,10 @@ const Profile = () => {
                                             <div className="mb-3">
                                                 <label for="desc" className="form-label">Description</label>
                                                 <textarea name='desc' onChange={onChange} value={userInf.desc} type="text" className="form-control" id="desc" />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label for="relationship" className="form-label">Relationship</label>
+                                                <input name='relationship' value={userInf.relationship} type="text" className="form-control" id="relationship" onChange={onChange} />
                                             </div>
                                             <div className="mb-3">
                                                 <label for="profile" className="form-label">New Profile Picture</label>
@@ -230,12 +237,24 @@ const Profile = () => {
 
 
                         </div>
+                        
                     </div>
+                    {isPageLoading && <div className="spinnerBody"><div class="spinner">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div> </div>}
                     <div className="profileRightBottom">
                         <div className="mobile"><Rightbar user={user} /></div>
                         <div className="feed-div"> <Feed username={username} /></div>
                         <div className="computer"><Rightbar user={user} /></div>
-
                     </div>
                 </div>
             </div>
@@ -244,6 +263,7 @@ const Profile = () => {
                     {message}
                 </Alert>
             </Snackbar>
+            
         </>
     )
 }

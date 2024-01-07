@@ -3,6 +3,7 @@ import './register.css'
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import { Alert, CircularProgress, Snackbar } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,10 +22,19 @@ const Register = () => {
   const desc = useRef();
   let history = useNavigate();
 
-
+  const deleteCloudPicture = async (file) => {
+    const imageUrlArray = file.split("/");
+    const image = imageUrlArray[imageUrlArray.length - 1];
+    const imagePublicId = image.split('.')[0];
+    const responce = await axios.delete(`https://sociosync.onrender.com/api/post/delete-image/` + imagePublicId);
+    console.log(responce);
+  }
   const postProfilePicture = async (pic) => {
     if (pic === undefined) {
       return;
+    }
+    if (profile != null) {
+      deleteCloudPicture(profile);
     }
 
     if (pic.type === "image/jpeg" || pic.type === "image/png" || pic.type === "image/jpg") {
@@ -55,7 +65,9 @@ const Register = () => {
     if (pic === undefined) {
       return;
     }
-
+    if (cover != null) {
+      deleteCloudPicture(cover);
+    }
     if (pic.type === "image/jpeg" || pic.type === "image/png" || pic.type === "image/jpg") {
       setIsLoading(true);
       const data = new FormData();
@@ -133,7 +145,7 @@ const Register = () => {
             <input type="text" ref={city} placeholder='City' className='loginInput' />
 
             <select ref={relationship} className='loginInput'>
-              <option className='loginInput'  disabled selected>Relationship</option>
+              <option className='loginInput' disabled selected>Relationship</option>
               <option className='loginInput' value="Single">Single</option>
               <option className='loginInput' value="Not Single">Not Single</option>
               <option className='loginInput' value="Married">Married</option>
@@ -141,7 +153,9 @@ const Register = () => {
             </select>
 
             <label htmlFor='file' style={{ display: "flex", justifyContent: "space-between" }} className='loginInput' >
-              <span style={{ paddingTop: "10px", opacity: "0.6" }} >Upload Profile Picture</span>
+              <span style={{ paddingTop: "10px", opacity: "0.6" }} >{profile != null
+                ? (<><DoneIcon style={{ color: "green" }} /> Uploaded </>)
+                : "Upload Profile Picture"} </span>
               <span className='upload-button' >Upload</span>
               <input
                 style={{ display: "none" }}
@@ -156,6 +170,7 @@ const Register = () => {
               <span style={{ paddingTop: "10px", opacity: "0.6" }} >Upload Cover Picture</span>
               <span className='upload-button' >Upload</span>
               <input
+                className='uploadInput'
                 style={{ display: "none" }}
                 type="file"
                 id='profile'

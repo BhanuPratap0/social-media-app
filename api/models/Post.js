@@ -20,7 +20,6 @@ const PostSchema = new mongoose.Schema({
         type: String,
         default: ""
     }
-
 },
     { timestamps: true }
 );
