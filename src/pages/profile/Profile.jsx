@@ -21,7 +21,7 @@ const Profile = () => {
     const [toasttype, setToastType] = useState("success");
     const [user, setUser] = useState({})
     const username = useParams().username;
-    const { user: currentuser, setUserChange, userChange, dispatch, host } = useContext(AuthContext);
+    const { user: currentuser, setUserChange, userChange, dispatch, host, setSearchResult } = useContext(AuthContext);
     const [userInf, setUserInf] = useState({ username: "", desc: "", profilePicture: "", coverPicture: "", relationship: "" });
     const [passType, setPassType] = useState("password");
     const [showPass, setShowPass] = useState("Show");
@@ -164,6 +164,7 @@ const Profile = () => {
         };
         fetchUser();
         setIsPageLoading(false);
+        setSearchResult([]);
 
     }, [host, userChange, username])
 
