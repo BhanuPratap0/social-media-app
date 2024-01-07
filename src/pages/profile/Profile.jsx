@@ -34,8 +34,15 @@ const Profile = () => {
     };
 
     const handleClose = () => {
+        if (user.profilePicture !== userInf.profilePicture) {
+            deleteCloudPicture(userInf.profilePicture);
+        }
+        if (user.coverPicture !== userInf.coverPicture) {
+            deleteCloudPicture(userInf.coverPicture);
+        }
         setOpen(false);
         setOpenAlert(false);
+        
     };
 
     const deleteCloudPicture = async (file) => {
@@ -52,7 +59,9 @@ const Profile = () => {
         if (pic === undefined) {
             return;
         }
-
+        if (user.profilePicture !== userInf.profilePicture) {
+            deleteCloudPicture(userInf.profilePicture);
+        }
         if (pic.type === "image/jpeg" || pic.type === "image/png" || pic.type === "image/jpg") {
             setIsLoading(true);
             const data = new FormData();
@@ -80,6 +89,9 @@ const Profile = () => {
     const postCoverPicture = async (pic) => {
         if (pic === undefined) {
             return;
+        }
+        if (user.coverPicture !== userInf.coverPicture) {
+            deleteCloudPicture(userInf.coverPicture);
         }
 
         if (pic.type === "image/jpeg" || pic.type === "image/png" || pic.type === "image/jpg") {
@@ -134,7 +146,7 @@ const Profile = () => {
             setToastType("success")
             setOpenAlert(true);
             setOpen(false);
-            console.log(userInf.username)
+    
             history(`/profile/${userInf.username}`)
 
         } catch (error) {
@@ -205,11 +217,11 @@ const Profile = () => {
                                             </div>
                                             <div className="mb-3">
                                                 <label for="profile" className="form-label">New Profile Picture</label>
-                                                {isLoading ? <CircularProgress style={{ color: 'black', height: "20px", width: "20px" }} /> : <input type="file" className="form-control" id="profile" onChange={(e) => postProfilePicture(e.target.files[0])} />}
+                                                <input type="file" className="form-control" id="profile" onChange={(e) => postProfilePicture(e.target.files[0])} />
                                             </div>
                                             <div className="mb-3">
                                                 <label for="cover" className="form-label">New Cover Picture</label>
-                                                {isLoading ? <CircularProgress style={{ color: 'black', height: "20px", width: "20px" }} /> : <input type="file" className="form-control" id="cover" onChange={(e) => postCoverPicture(e.target.files[0])} />}
+                                              <input type="file" className="form-control" id="cover" onChange={(e) => postCoverPicture(e.target.files[0])} />
                                             </div>
                                             {/* <div className="mb-3">
                                                 <label for="exampleInputPassword1" className="form-label">New Password</label>
@@ -229,7 +241,8 @@ const Profile = () => {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
-                                    <Button onClick={handleUpdateUser}>Update</Button>
+                                {isLoading ? <CircularProgress style={{ color: 'black', height: "20px", width: "20px" }} /> 
+                                : <Button onClick={handleUpdateUser}>Update</Button> } 
                                     <Button onClick={handleClose}>Cancel</Button>
                                 </DialogActions>
                             </Dialog>
@@ -239,7 +252,7 @@ const Profile = () => {
                         </div>
                         
                     </div>
-                    {isPageLoading && <div className="spinnerBody"><div class="spinner">
+                    {isPageLoading && <div className="spinnerBody"><div className="spinner">
                             <div></div>
                             <div></div>
                             <div></div>
