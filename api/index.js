@@ -36,7 +36,7 @@ app.listen(PORT, () => {
 })
 
 
-const SOCKETPORT = process.env.SOCKETPORT || 5000;
+const SOCKETPORT = 11000;
 
 const io = require("socket.io")(SOCKETPORT, {
     cors: {
