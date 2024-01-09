@@ -30,10 +30,13 @@ app.use('/api/post', postRoutes);
 app.use('/api/conversation', conversations);
 app.use('/api/message', messages);
 
+const PORT = process.env.PORT || 8800;
+app.listen(PORT, () => {
+    console.log(`Backend Server is Running! on post: ${PORT} `)
+})
 
 
-
-const SOCKETPORT = process.env.PORT;
+const SOCKETPORT = 11000;
 
 const io = require("socket.io")(SOCKETPORT, {
     cors: {
