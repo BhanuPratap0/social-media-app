@@ -31,7 +31,7 @@ const Messenger = () => {
 
 
     useEffect(() => {
-        socket.current = io("http://localhost:5000");
+        socket.current = io("https://sociosync.onrender.com");
         // socket.on("typing", () => setIsTyping(true));
         // socket.on("stop typing", () => setIsTyping(false));
         socket.current.on("getMessage", data => {
