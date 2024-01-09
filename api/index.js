@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
@@ -11,13 +12,12 @@ const conversations = require('./routes/conversations')
 const messages = require('./routes/messages')
 var cors = require('cors')
 
-dotenv.config();
-connectDB();
-const app = express();
-app.use(express.json())
 
 app.use(cors());
+app.use(express.json())
 
+dotenv.config();
+connectDB();
 
 //middlewares
 app.use(express.json());
@@ -35,6 +35,8 @@ const server = app.listen(PORT, () => {
     console.log(`Backend Server is Running! on post: ${PORT} `)
 })
 
+
+const SOCKETPORT = 11000;
 
 const io = require("socket.io")(server, {
     cors: {
