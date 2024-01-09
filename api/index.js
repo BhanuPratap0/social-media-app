@@ -40,7 +40,7 @@ const SOCKETPORT = 11000;
 
 const io = require("socket.io")(server, {
     cors: {
-        origin: "https://sociosync.netlify.app"
+        origin: "https://sociosync.netlify.app/"
     },
 });
 
