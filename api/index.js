@@ -8,6 +8,8 @@ const connectDB = require('./db');
 const userRoutes = require('./routes/usersRoutes') 
 const authRoutes = require('./routes/authRoutes') 
 const postRoutes = require('./routes/postRoutes') 
+const conversations = require('./routes/conversations') 
+const messages = require('./routes/messages') 
 var cors = require('cors')
 
 app.use(cors());
@@ -24,6 +26,8 @@ app.use(morgan("common"));
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/conversation', conversations);
+app.use('/api/message', messages);
 
 const PORT = process.env.PORT || 8800;
 app.listen(PORT, ()=>{

@@ -9,6 +9,7 @@ import './App.css'
 import Admin from "./pages/adminPanel/Admin";
 import Feed from "./components/feed/Feed";
 import WeatherApp from "./components/getlocation/WeatherApp";
+import Messenger from "./pages/messenger/Messenger";
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
       <Route exact path="/register" element={<Register />} ></Route>
       <Route exact path="/profile/:username" element={<Profile />} ></Route>
       <Route exact path="/admin" element={ user?.isAdmin ? <Admin />: <Navigate to={"/"} />} ></Route>
-      <Route exact path="/loc" element={ <WeatherApp/>} ></Route>
+      <Route exact path="/messenger" element={user ? <Messenger/> :<Navigate to={"/"} /> } ></Route>
     </Routes>
   );
 }
