@@ -40,7 +40,7 @@ const SOCKETPORT = process.env.SOCKETPORT || 5000;
 
 const io = require("socket.io")(SOCKETPORT, {
     cors: {
-        origin: "http://localhost:3000"
+        origin: "https://sociosync.netlify.app/"
     },
 });
 
