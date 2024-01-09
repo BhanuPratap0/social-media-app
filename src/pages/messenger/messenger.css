@@ -1,50 +1,82 @@
-.messenger{
+.messenger {
     height: calc(100vh - 70px);
     display: flex;
 }
 
-.chatMenu{
+.chatMenu {
+    flex: 3.5;
+
+}
+.chatMenu-Mobile{
     flex: 3.5
 }
 
-.chatMenuInput{
+.chatMenuInput {
     width: 90%;
     padding: 10px 0;
     border: none;
     border-bottom: 1px solid gray;
 }
-.chatBox{
-    flex: 5.5
-}
 
-.chatBoxWrapper{
+.chatBox {
+    flex: 5.5;
+}
+.chatBox-Mobile{
+    flex: 5.5;
+}
+.chatBoxWrapper {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    margin: 0;
 }
+.chatBoxHeader{
+    position: absolute;
+    z-index: 99;
+    width: 100%;
+    background-color: rgb(239, 237, 237);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    margin-left: -12px;
+    margin-top: -10px;
+}
+.closeIcon{
+    margin-right: 20px;
+    cursor: pointer;
+}
+.chatBoxUsername{
+    font-size: 25px;
 
-.chatBoxTop{
+}
+.chatBoxTop {
     overflow-y: scroll !important;
     height: 100%;
     padding-right: 10px;
+    scrollbar-width: none;
 }
 
-.chatBoxBottom{
+.chatBoxTop::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+}
+
+.chatBoxBottom {
     margin-top: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.chatMessageInput{
+.chatMessageInput {
     width: 80%;
     height: 90px !important;
     padding: 10px;
 }
 
-.chatSubmitButton{
+.chatSubmitButton {
     width: 70px;
     border: none;
     border-radius: 5px;
@@ -54,23 +86,25 @@
     color: white;
 }
 
-.chatOnline{
+.chatOnline {
     flex: 3;
 }
 
-.chatMenuWrapper,.chatBoxWrapper, .chatOnlineWrapper{
+.chatMenuWrapper,
+.chatBoxWrapper,
+.chatOnlineWrapper {
     padding: 10px;
 
 }
 
-.noConversationText{
+.noConversationText {
     position: absolute;
     top: 10%;
     font-size: 50px;
     color: rgb(245, 245, 245);
     text-align: center;
     cursor: default;
-    
+
 }
 
 
@@ -78,8 +112,23 @@
     .chatBox{
         display: none;
     }
-    .chatMenu{display: block;}
-    .chatOnline{
+    .chatBox-Mobile{
+        flex: 12;
+        display: block;
+    }
+
+    .chatMenu {
+        display: block;
+    }
+
+    .chatOnline {
         display: none;
     }
+    .chatMenu-Mobile{
+        display: none;
+    }
+    .chatBoxHeader{
+
+    }
+   
 }

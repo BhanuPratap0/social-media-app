@@ -23,9 +23,8 @@
 }
 
 .messageBottom{
-    font-size: 12px;
-    margin-top: 10px;
-}
+    margin-top: -15px;
+    font-size: 12px;}
 
 .message.own{
     align-items: flex-end;
