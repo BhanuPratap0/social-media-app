@@ -31,17 +31,13 @@ app.use('/api/conversation', conversations);
 app.use('/api/message', messages);
 
 const PORT = process.env.PORT || 8800;
-const server = app.listen(PORT, () => {
-    console.log(`Backend Server is Running! on post: ${PORT} `)
-})
+const server = app.listen(PORT,console.log(`Backend Server is Running! on post: ${PORT} `));
 
-
-const SOCKETPORT = 11000;
 
 const io = require("socket.io")(server, {
+    pingTimeout: 60000,
     cors: {
-        origin: "https://sociosync.netlify.app/",
-        methods: ['GET', 'POST'],
+        origin: `https://sociosync.netlify.app/`,
     },
 });
 
@@ -63,22 +59,6 @@ const getUser = (userId) => {
 io.on("connection", (socket) => {
     console.log("a user connected");
 
-    //join user a room
-    socket.on("setup", (userData) => {
-        socket.join(userData._id);
-        socket.emit("connected")
-    });
-
-    //join chat by user
-    socket.on('join chat', (room) => {
-        socket.join(room);
-        console.log("User Joined room: " + room);
-    });
-
-
-    //is typing or not
-    socket.on('typing', (room) => socket.in(room).emit("typing"));
-    socket.on('stop typing', (room) => socket.in(room).emit("stop typing"));
 
     //take user and socketId from user
     socket.on("addUser", userId => {
