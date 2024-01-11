@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './chatOnline.css'
 import axios from 'axios';
 
-const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
+const ChatOnline = ({ onlineUsers, currentId, setCurrentChat,}) => {
 
     const [friends, setFriends] = useState([]);
     const [onlineFriends, setOnlineFriends] = useState([]);
@@ -18,7 +18,7 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
         };
         getFriends();
     }, [currentId])
-    console.log(friends);
+
 
     useEffect(() => {
         setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));

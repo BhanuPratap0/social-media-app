@@ -24,13 +24,13 @@ const Messenger = () => {
     const [chatMenuClass, setChatMenuClass] = useState(false);
     const [currentChatUser, setCurrentChatUser] = useState(null);
     const scrollRef = useRef();
-    const [typing, setTyping] = useState(false);
-    const [isTyping, setIsTyping] = useState(false);
+    const [userOnline, setUserOnline] = useState(false);
     var ENDPOINT = 'https://sociosync.onrender.com';
+    // var ENDPOINT = 'http://localhost:8800';
     var socket = io(ENDPOINT);
 
     useEffect(() => {
-        
+
         // socket.on("typing", () => setIsTyping(true));
         // socket.on("stop typing", () => setIsTyping(false));
         socket.on("getMessage", data => {
@@ -52,7 +52,13 @@ const Messenger = () => {
         socket.on("getUsers", users => {
             setOnlineUsers(user.followings.filter((f) => users.some((u) => u.userId === f)));
         })
-    }, [user]);
+
+    }, [user, currentChatUser]);
+
+
+    useEffect(() => {
+        setUserOnline(onlineUsers.includes(currentChatUser?._id));
+    }, [onlineUsers]);
 
     useEffect(() => {
         const getConversations = async () => {
@@ -77,8 +83,11 @@ const Messenger = () => {
         }
         const getUser = async () => {
             try {
-                const res = await axios.get("https://sociosync.onrender.com/api/user?userId=" + currentChat?.members[0]);
-                setCurrentChatUser(res.data);
+                if (currentChat) {
+                    const chatUser = currentChat.members.find((f) => f !== user._id);
+                    const res = await axios.get("https://sociosync.onrender.com/api/user?userId=" + chatUser);
+                    setCurrentChatUser(res.data);
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -98,7 +107,6 @@ const Messenger = () => {
         };
 
         const receiverId = currentChat.members.find((member) => member !== user._id);
-        console.log(receiverId);
         socket.emit("sendMessage", {
             senderId: user._id,
             receiverId: receiverId,
@@ -154,6 +162,7 @@ const Messenger = () => {
     // }
 
 
+
     return (
         <>
             <Topbar />
@@ -173,7 +182,11 @@ const Messenger = () => {
                     <div className="chatBoxWrapper">
                         <div className={chatBoxClass ? "chatBoxHeader" : "d-none"} >
                             <ArrowCircleLeftIcon onClick={handleBackButton} className='closeIcon' fontSize='large' />
-                            <span className='chatBoxUsername' >{currentChatUser?.username}</span>
+                            <img src={currentChatUser?.profilePicture} alt="" />
+                            <div className='chatBoxHeaderText' >
+                                <span className='chatBoxUsername' >{currentChatUser?.username}</span>
+                                {userOnline ? <span className='onlineUser' >Online</span> : ""}
+                            </div>
                         </div>
                         {currentChat ? <>
                             <div className="chatBoxTop">
@@ -205,7 +218,7 @@ const Messenger = () => {
                 </div>
                 <div className="chatOnline">
                     <div className="chatOnlineWrapper">
-                        <ChatOnline onlineUsers={onlineUsers} currentId={user._id} setCurrentChat={setCurrentChat} />
+                        <ChatOnline onlineUsers={onlineUsers} currentId={user._id} setCurrentChat={setCurrentChat} setUserOnline={setUserOnline} currentChatUser={currentChatUser} />
                     </div>
                 </div>
             </div>
