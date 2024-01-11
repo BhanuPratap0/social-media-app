@@ -19,7 +19,6 @@ const Messenger = () => {
     const [newMessage, setNewMessage] = useState("");
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
-    const socket = useRef();
     const { user } = useContext(AuthContext);
     const [chatBoxClass, setChatBoxClass] = useState(false);
     const [chatMenuClass, setChatMenuClass] = useState(false);
@@ -28,13 +27,13 @@ const Messenger = () => {
     const [typing, setTyping] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
     var ENDPOINT = 'https://sociosync.onrender.com';
-
+    var socket = io(ENDPOINT);
 
     useEffect(() => {
-        socket.current = io(ENDPOINT);
+        
         // socket.on("typing", () => setIsTyping(true));
         // socket.on("stop typing", () => setIsTyping(false));
-        socket.current.on("getMessage", data => {
+        socket.on("getMessage", data => {
             setArrivalMessage({
                 sender: data.senderId,
                 text: data.text,
@@ -49,8 +48,8 @@ const Messenger = () => {
     }, [arrivalMessage, currentChat])
 
     useEffect(() => {
-        socket.current.emit("addUser", user._id);
-        socket.current.on("getUsers", users => {
+        socket.emit("addUser", user._id);
+        socket.on("getUsers", users => {
             setOnlineUsers(user.followings.filter((f) => users.some((u) => u.userId === f)));
         })
     }, [user]);
@@ -100,7 +99,7 @@ const Messenger = () => {
 
         const receiverId = currentChat.members.find((member) => member !== user._id);
         console.log(receiverId);
-        socket.current.emit("sendMessage", {
+        socket.emit("sendMessage", {
             senderId: user._id,
             receiverId: receiverId,
             text: newMessage,
