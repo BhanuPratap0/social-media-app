@@ -37,7 +37,7 @@ const server = app.listen(PORT,console.log(`Backend Server is Running! on post: 
 const io = require("socket.io")(server, {
     pingTimeout: 60000,
     cors: {
-        origin: `https://sociosync.onrender.com`,
+        origin: `https://sociosync.netlify.app/`,
     },
 });
 

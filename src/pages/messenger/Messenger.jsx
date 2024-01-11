@@ -27,11 +27,11 @@ const Messenger = () => {
     const scrollRef = useRef();
     const [typing, setTyping] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
-    
+    var ENDPOINT = 'https://sociosync.onrender.com';
 
 
     useEffect(() => {
-        socket.current = io("https://sociosync.onrender.com");
+        socket.current = io(ENDPOINT);
         // socket.on("typing", () => setIsTyping(true));
         // socket.on("stop typing", () => setIsTyping(false));
         socket.current.on("getMessage", data => {
