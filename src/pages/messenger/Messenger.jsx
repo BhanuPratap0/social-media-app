@@ -103,6 +103,7 @@ const Messenger = () => {
         if ((e.key === "Enter" && newMessage)){
             e.preventDefault();
             const message = {
+                senderPic: user.profilePicture,
                 sender: user._id,
                 text: newMessage,
                 conversationId: currentChat._id
