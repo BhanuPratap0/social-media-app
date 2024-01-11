@@ -1,11 +1,17 @@
 import ReactTimeago from 'react-timeago'
 import './message.css'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Message = ({ message, own }) => {
+  
+
+
+
   return (
     <div className={own ? "message own" : "message"}>
       <div className="messageTop">
-        <img src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg" alt="" className='messageImg' />
+        <img src={message.senderPic} alt="" className='messageImg' />
         <p className='messageText'>{message.text}</p>
       </div>
       <div className="messageBottom">

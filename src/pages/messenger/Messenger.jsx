@@ -98,28 +98,60 @@ const Messenger = () => {
 
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const message = {
-            sender: user._id,
-            text: newMessage,
-            conversationId: currentChat._id
-        };
+    const handleSubmitOnKeyPress = async (e) => {
+       
+        if ((e.key === "Enter" && newMessage)){
+            e.preventDefault();
+            const message = {
+                sender: user._id,
+                text: newMessage,
+                conversationId: currentChat._id
+            };
 
-        const receiverId = currentChat.members.find((member) => member !== user._id);
-        socket.emit("sendMessage", {
-            senderId: user._id,
-            receiverId: receiverId,
-            text: newMessage,
-        });
+            const receiverId = currentChat.members.find((member) => member !== user._id);
+            socket.emit("sendMessage", {
+                senderId: user._id,
+                receiverId: receiverId,
+                text: newMessage,
+            });
 
-        try {
-            const res = await axios.post("https://sociosync.onrender.com/api/message/", message);
-            setMessages([...messages, res.data]);
-        } catch (error) {
-            console.log(error);
+            try {
+                const res = await axios.post("https://sociosync.onrender.com/api/message/", message);
+                setMessages([...messages, res.data]);
+            } catch (error) {
+                console.log(error);
+            }
+            setNewMessage("");
         }
-        setNewMessage("");
+
+    }
+
+    const handleSubmit = async(e) =>{
+        if (newMessage){
+            e.preventDefault();
+            const message = {
+                senderPic: user.profilePicture,
+                sender: user._id,
+                text: newMessage,
+                conversationId: currentChat._id
+            };
+
+            const receiverId = currentChat.members.find((member) => member !== user._id);
+            socket.emit("sendMessage", {
+                senderId: user._id,
+                receiverId: receiverId,
+                text: newMessage,
+            });
+
+            try {
+                const res = await axios.post("https://sociosync.onrender.com/api/message/", message);
+                setMessages([...messages, res.data]);
+            } catch (error) {
+                console.log(error);
+            }
+            setNewMessage("");
+        }
+
     }
 
     useEffect(() => {
@@ -161,6 +193,9 @@ const Messenger = () => {
 
     // }
 
+    const typingHandler = (e) =>{
+        setNewMessage(e.target.value);
+    }
 
 
     return (
@@ -171,8 +206,8 @@ const Messenger = () => {
                     <div className="chatMenuWrapper">
                         <input type="text" className="chatMenuInput" placeholder='Srach For Friends' />
                         {conversations.map(c => (
-                            <div onClick={() => handleChatbox(c)}>
-                                <Conversation key={c._id} conversations={c} currentUser={user} />
+                            <div key={c._id} onClick={() => handleChatbox(c)}>
+                                <Conversation  conversations={c} currentUser={user} />
                             </div>
                         ))}
                     </div>
@@ -205,12 +240,15 @@ const Messenger = () => {
                                 />
                             </div> : (<></>)} */}
                             <div className="chatBoxBottom">
-                                <textarea
-                                    className='chatMessageInput'
-                                    placeholder='Write something'
-                                    onChange={(e) => setNewMessage(e.target.value)}
-                                    value={newMessage}
-                                ></textarea>
+                                <form className='chatMessageInput'  onKeyDown={handleSubmitOnKeyPress}  >
+                                    <textarea                                    
+                                        className='chatMessageInput'
+                                        placeholder='Write something'
+                                        onChange={typingHandler}
+                                        value={newMessage}
+                                       
+                                    ></textarea>
+                                </form>
                                 <button className='chatSubmitButton' onClick={handleSubmit} >Send</button>
                             </div>
                         </> : <span className='noConversationText' >Open a conversation to start a chat</span>}
