@@ -131,6 +131,14 @@
 
 }
 
+.serachCoversationContainer{
+    align-items: center;
+    z-index: 99;
+    position: fixed;
+    background-color: #142d4c;
+    width: 350px;
+    margin-left: 50px;
+}
 
 @media only screen and (max-width: 600px) {
     .messenger {
@@ -154,8 +162,13 @@
     .chatMenu-Mobile{
         display: none;
     }
-    .chatBoxHeader{
-
+    .serachCoversationContainer{
+        align-items: center;
+        z-index: 99;
+        position: fixed;
+        background-color: #142d4c;
+        width: 350px;
+        margin-left: 10px;
     }
    
 }

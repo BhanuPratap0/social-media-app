@@ -9,6 +9,10 @@ import axios from 'axios'
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import io from 'socket.io-client';
 import Lottie from 'react-lottie';
+import { CircularProgress } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Search } from '@mui/icons-material'
+import SearchResult from '../../components/searchresult/SearchResult'
 
 
 const Messenger = () => {
@@ -19,12 +23,13 @@ const Messenger = () => {
     const [newMessage, setNewMessage] = useState("");
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
-    const { user } = useContext(AuthContext);
+    const { user, host, setCoversationSearch, coversationSearch, userChange, setUserChange } = useContext(AuthContext);
     const [chatBoxClass, setChatBoxClass] = useState(false);
     const [chatMenuClass, setChatMenuClass] = useState(false);
     const [currentChatUser, setCurrentChatUser] = useState(null);
     const scrollRef = useRef();
     const [userOnline, setUserOnline] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     var ENDPOINT = 'https://sociosync.onrender.com';
     // var ENDPOINT = 'http://localhost:8800';
     var socket = io(ENDPOINT);
@@ -70,7 +75,7 @@ const Messenger = () => {
             }
         }
         getConversations();
-    }, [user._id])
+    }, [user._id, userChange])
 
     useEffect(() => {
         const getMessages = async () => {
@@ -99,8 +104,8 @@ const Messenger = () => {
 
 
     const handleSubmitOnKeyPress = async (e) => {
-       
-        if ((e.key === "Enter" && newMessage)){
+
+        if ((e.key === "Enter" && newMessage)) {
             e.preventDefault();
             const message = {
                 senderPic: user.profilePicture,
@@ -127,8 +132,8 @@ const Messenger = () => {
 
     }
 
-    const handleSubmit = async(e) =>{
-        if (newMessage){
+    const handleSubmit = async (e) => {
+        if (newMessage) {
             e.preventDefault();
             const message = {
                 senderPic: user.profilePicture,
@@ -194,10 +199,26 @@ const Messenger = () => {
 
     // }
 
-    const typingHandler = (e) =>{
+    const typingHandler = (e) => {
         setNewMessage(e.target.value);
     }
 
+    const searchUser = async (query) => {
+        if (!query) {
+            setCoversationSearch([])
+            return;
+        } else {
+            setIsLoading(true);
+            try {
+                const { data } = await axios.get(`${host}/api/user/searchUsers?search=${query}&userId=${user._id}`);
+                console.log(data);
+                setIsLoading(false);
+                setCoversationSearch(data);
+            } catch (error) {
+                console.log("no user to search")
+            }
+        }
+    }
 
     return (
         <>
@@ -205,10 +226,24 @@ const Messenger = () => {
             <div className='messenger' >
                 <div className={chatMenuClass ? "chatMenu-Mobile" : "chatMenu"}>
                     <div className="chatMenuWrapper">
-                        <input type="text" className="chatMenuInput" placeholder='Srach For Friends' />
+                        <Search className="searchIcon" />
+                        <input type="text" className="chatMenuInput" placeholder='Search For Friends'
+                            onChange={(e) => searchUser(e.target.value)}
+                        />
+
+                        <><div className="serachCoversationContainer" >
+                            {isLoading
+                                ? <CircularProgress fontSize={"xl"} style={{ color: 'white'}} />
+                                : (coversationSearch !== null && coversationSearch.map((result) => (
+                                    <SearchResult user={result} currentUser={user} setCoversationSearch={setCoversationSearch} setUserChange={setUserChange} />
+                                ))
+                                )}
+                        </div >
+                        </>
+
                         {conversations.map(c => (
                             <div key={c._id} onClick={() => handleChatbox(c)}>
-                                <Conversation  conversations={c} currentUser={user} />
+                                <Conversation conversations={c} currentUser={user} />
                             </div>
                         ))}
                     </div>
@@ -241,13 +276,13 @@ const Messenger = () => {
                                 />
                             </div> : (<></>)} */}
                             <div className="chatBoxBottom">
-                                <form className='chatMessageInput'  onKeyDown={handleSubmitOnKeyPress}  >
-                                    <textarea                                    
+                                <form className='chatMessageInput' onKeyDown={handleSubmitOnKeyPress}  >
+                                    <textarea
                                         className='chatMessageInput'
                                         placeholder='Write something'
                                         onChange={typingHandler}
                                         value={newMessage}
-                                       
+
                                     ></textarea>
                                 </form>
                                 <button className='chatSubmitButton' onClick={handleSubmit} >Send</button>

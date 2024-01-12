@@ -4,9 +4,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Message = ({ message, own }) => {
-  
-
-
 
   return (
     <div className={own ? "message own" : "message"}>

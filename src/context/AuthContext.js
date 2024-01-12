@@ -16,17 +16,18 @@ export const AuthContextProvider = ({ children }) => {
     const [followingArray, setFollowingsArray] = useState([]);
     const [postChange, setPostChange] = useState();
     const [userChange, setUserChange] = useState();
+    const [coversationSearch, setCoversationSearch] = useState(null);
     // const host = "http://localhost:8800";
     const host = "https://sociosync.onrender.com";
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE)
 
-    
+
     return (
         <AuthContext.Provider value={{
             loginSuccess, setLoginSuccess,
-            searchResult, 
+            searchResult,
             setSearchResult,
-            followingArray, 
+            followingArray,
             setFollowingsArray,
             postChange,
             setPostChange,
@@ -34,9 +35,11 @@ export const AuthContextProvider = ({ children }) => {
             isFetching: state.isFetching,
             error: state.error,
             dispatch,
-            userChange, 
+            userChange,
             setUserChange,
-            host
+            host,
+            coversationSearch,
+            setCoversationSearch
         }} >
             {children}
         </AuthContext.Provider>
