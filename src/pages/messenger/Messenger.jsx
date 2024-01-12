@@ -228,14 +228,16 @@ const Messenger = () => {
             <div className='messenger' >
                 <div className={chatMenuClass ? "chatMenu-Mobile" : "chatMenu"}>
                     <div className="chatMenuWrapper">
-                        <Search className="searchIcon" />
-                        <input type="text" className="chatMenuInput" placeholder='Search For Friends'
-                            onChange={(e) => searchUser(e.target.value)}
-                        />
+                        <div className="coversationSearch" >
+                            <Search className="searchIcon" />
+                            <input type="text" className="chatMenuInput" placeholder='Search For Friends'
+                                onChange={(e) => searchUser(e.target.value)}
+                            />
+                        </div>
 
                         <><div className="serachCoversationContainer" >
                             {isLoading
-                                ? <CircularProgress fontSize={"xl"} style={{ color: 'white'}} />
+                                ? <CircularProgress fontSize={"xl"} style={{ color: 'white' }} />
                                 : (coversationSearch !== null && coversationSearch.map((result) => (
                                     <SearchResult user={result} currentUser={user} setCoversationSearch={setCoversationSearch} setUserChange={setUserChange} />
                                 ))

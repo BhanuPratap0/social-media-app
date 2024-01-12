@@ -137,7 +137,12 @@
     position: fixed;
     background-color: #142d4c;
     width: 350px;
-    margin-left: 50px;
+    margin-left: 30px;
+}
+
+.coversationSearch{
+    display: flex;
+    align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
