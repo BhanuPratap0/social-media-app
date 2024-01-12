@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import './comment.css'
 import axios from 'axios'
 
@@ -7,6 +7,8 @@ import { AuthContext } from '../../context/AuthContext';
 import ReactTimeago from 'react-timeago';
 
 const Comment = ({ comment, postUserId }) => {
+    
+
     const { user, setPostChange, host } = useContext(AuthContext);
     const [userData, setUserData] = useState([]);
     useEffect(() => {

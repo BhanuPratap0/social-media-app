@@ -21,7 +21,7 @@ const Profile = () => {
     const [toasttype, setToastType] = useState("success");
     const [user, setUser] = useState({})
     const username = useParams().username;
-    const { user: currentuser, setUserChange, userChange, dispatch, host, setSearchResult } = useContext(AuthContext);
+    const { postLength, user: currentuser, setUserChange, userChange, dispatch, host, setSearchResult } = useContext(AuthContext);
     const [userInf, setUserInf] = useState({ username: "", desc: "", profilePicture: "", coverPicture: "", relationship: "" });
     const [passType, setPassType] = useState("password");
     const [showPass, setShowPass] = useState("Show");
@@ -42,7 +42,7 @@ const Profile = () => {
         }
         setOpen(false);
         setOpenAlert(false);
-        
+
     };
 
     const deleteCloudPicture = async (file) => {
@@ -146,7 +146,7 @@ const Profile = () => {
             setToastType("success")
             setOpenAlert(true);
             setOpen(false);
-    
+
             history(`/profile/${userInf.username}`)
 
         } catch (error) {
@@ -180,7 +180,7 @@ const Profile = () => {
     const onChange = (e) => {
         setUserInf({ ...userInf, [e.target.name]: e.target.value })
     }
-    
+
 
     return (
         <>
@@ -198,6 +198,7 @@ const Profile = () => {
                             <h4 className='profileInfoName' >{user.username}</h4>
                             <span className='profileInfoDesc' >{user.desc}</span>
                             {currentuser._id === user._id && <button onClick={handleClickOpen} className='editProfile' >Edit Profile<EditIcon fontSize='small' style={{ marginBottom: "3px" }} /></button>}
+
 
                             <Dialog open={open} onClose={handleClose}>
                                 <DialogTitle>Update Profile</DialogTitle>
@@ -222,7 +223,7 @@ const Profile = () => {
                                             </div>
                                             <div className="mb-3">
                                                 <label for="cover" className="form-label">New Cover Picture</label>
-                                              <input type="file" className="form-control" id="cover" onChange={(e) => postCoverPicture(e.target.files[0])} />
+                                                <input type="file" className="form-control" id="cover" onChange={(e) => postCoverPicture(e.target.files[0])} />
                                             </div>
                                             {/* <div className="mb-3">
                                                 <label for="exampleInputPassword1" className="form-label">New Password</label>
@@ -242,8 +243,8 @@ const Profile = () => {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
-                                {isLoading ? <CircularProgress style={{ color: 'black', height: "20px", width: "20px" }} /> 
-                                : <Button onClick={handleUpdateUser}>Update</Button> } 
+                                    {isLoading ? <CircularProgress style={{ color: 'black', height: "20px", width: "20px" }} />
+                                        : <Button onClick={handleUpdateUser}>Update</Button>}
                                     <Button onClick={handleClose}>Cancel</Button>
                                 </DialogActions>
                             </Dialog>
@@ -251,24 +252,57 @@ const Profile = () => {
 
 
                         </div>
-                        
+
                     </div>
                     {isPageLoading && <div className="spinnerBody"><div className="spinner">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div> </div>}
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div> </div>}
                     <div className="profileRightBottom">
-                        <div className="mobile"><Rightbar user={user} /></div>
-                        <div className="feed-div"> <Feed username={username} /></div>
-                        <div className="computer"><Rightbar user={user} /></div>
+                        <div className="mobile">
+                            <div className="userFanFollowings">
+                                <div className="fanFollowingItem">
+                                    <span>{postLength}</span>
+                                    <span className='followingText'>Posts</span>
+                                </div>
+                                <div className="fanFollowingItem">
+                                    <span>{user.followers?.length}</span>
+                                    <span className='followingText'>Followers</span>
+                                </div>
+                                <div className="fanFollowingItem">
+                                    <span>{user.followings?.length}</span>
+                                    <span className='followingText'>Followings</span>
+                                </div>
+
+                            </div>
+                            <Rightbar user={user} />
+                        </div>
+                        <div className="feed-div"><Feed username={username} /></div>
+                        <div className="computer">
+                            <div className={ currentuser.username==username ? "userFanFollowings" : "friendFanFollowings"}>
+                                <div className="fanFollowingItem">
+                                    <span>{postLength}</span>
+                                    <span className='followingText'>Posts</span>
+                                </div>
+                                <div className="fanFollowingItem">
+                                    <span>{user.followers?.length}</span>
+                                    <span className='followingText'>Followers</span>
+                                </div>
+                                <div className="fanFollowingItem">
+                                    <span>{user.followings?.length}</span>
+                                    <span className='followingText'>Followings</span>
+                                </div>
+                            </div>
+                            <Rightbar user={user} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -277,7 +311,7 @@ const Profile = () => {
                     {message}
                 </Alert>
             </Snackbar>
-            
+
         </>
     )
 }

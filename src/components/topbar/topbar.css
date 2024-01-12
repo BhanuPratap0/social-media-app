@@ -120,10 +120,10 @@
     background-color: #142d4c;
     width: 350px;
     margin-left: 390px;
-    padding: 10px;
 }
 
 .searchUserItem {
+    margin: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;

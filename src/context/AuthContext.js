@@ -11,6 +11,7 @@ export const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {
 
+    const [postLength, setPostLength] = useState("1");
     const [loginSuccess, setLoginSuccess] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
     const [followingArray, setFollowingsArray] = useState([]);
@@ -39,7 +40,9 @@ export const AuthContextProvider = ({ children }) => {
             setUserChange,
             host,
             coversationSearch,
-            setCoversationSearch
+            setCoversationSearch,
+            postLength, 
+            setPostLength
         }} >
             {children}
         </AuthContext.Provider>

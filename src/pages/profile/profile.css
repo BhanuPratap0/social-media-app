@@ -59,6 +59,7 @@
 }
 
 .computer {
+    width: 50%;
     display: block;
     margin: 0 10px 0 10px;
 }
@@ -68,7 +69,41 @@
     background-color: white;
 }
 .feed-div{
-    width: 60%;
+    width: 75%;
+}
+
+.userFanFollowings{
+    padding: 10px 0 10px 0;
+    border-radius: 10px;
+    background-color: rgb(243, 243, 243);
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bolder;
+    justify-content: space-around;
+}
+.friendFanFollowings{
+    border-radius: 10px;
+    background-color: rgb(243, 243, 243);
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bolder;
+    justify-content: space-around;
+}
+
+.followingText{
+    font-size: 15px;
+    font-weight: 300 !important;
+}
+
+.fanFollowingItem{    
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px 0 10px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -86,6 +121,10 @@
     .feed-div{
         width: auto;
     }
+    .userFanFollowings{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
 
 
 }
@@ -100,8 +139,7 @@
     height: 100vh;
 }
 
-.spinner {
-    
+.spinner {    
     position: absolute;
     width: 9px;
     height: 9px;

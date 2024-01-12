@@ -183,7 +183,7 @@ const Post = ({ post }) => {
                     <div className="postBottomRight">
                         <span className="postCommentText"> {comments.length ===1 ? (`${comments.length} Comment`) : (`${comments.length} Comments`)}</span>
                     </div>
-                </div>
+                </div>                
             {comments!=null && <div  className='comments-section'>
                 {comments?.map((comment) => {
                     return <Comment key={comment._id} postUserId={post.userId} comment={comment} />

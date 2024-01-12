@@ -12,11 +12,11 @@ export default function Topbar() {
 
 
   const [isLoading, setIsLoading] = useState(false);
-  const { user, searchResult, setSearchResult,host } = useContext(AuthContext)
+  const { user, searchResult, setSearchResult, host } = useContext(AuthContext)
 
-  useEffect(()=>{
+  useEffect(() => {
     setSearchResult([]);
-  },[])
+  }, [])
 
 
   const searchUser = async (query) => {
@@ -38,7 +38,7 @@ export default function Topbar() {
 
   const history = useNavigate();
 
-  const logoutHandler = () =>{
+  const logoutHandler = () => {
     localStorage.removeItem('user');
     history("/login");
   }
@@ -61,20 +61,20 @@ export default function Topbar() {
         </div>
         <div className="topbarRight">
           <div className="topbarLinks">
-            <Link to="/" style={{textDecoration:"none", color:"white"}} ><span className="topbarLink">Homepage</span></Link>
+            <Link to="/" style={{ textDecoration: "none", color: "white" }} ><span className="topbarLink">Homepage</span></Link>
             {/* <span className="topbarLink">Timeline</span> */}
           </div>
           <div className="topbarIcons">
             <div className="topbarIconItem">
-              <Person style={{height:"30px", width:"30px"}} />
+              <Person style={{ height: "30px", width: "30px" }} />
               <span className="topbarIconBadge">1</span>
             </div>
             <div className="topbarIconItem">
-              <Link style={{textDecoration:"none", color:"white"}} to="/messenger"><Chat style={{height:"30px", width:"30px"}} /></Link> 
+              <Link style={{ textDecoration: "none", color: "white" }} to="/messenger"><Chat style={{ height: "30px", width: "30px" }} /></Link>
               <span className="topbarIconBadge">1</span>
             </div>
             <div className="topbarIconItem">
-              <Notifications style={{height:"30px", width:"30px"}} />
+              <Notifications style={{ height: "30px", width: "30px" }} />
               <span className="topbarIconBadge">1</span>
             </div>
           </div>
@@ -87,18 +87,18 @@ export default function Topbar() {
             </button>
             <ul className="dropdown-menu">
               <li><Link className="dropdown-item" to={`/profile/${user.username}`} >Profile</Link></li>
-              { user.isAdmin &&  <li><Link className="dropdown-item" to={`/admin`} >Admin Panel</Link></li>}
+              {user.isAdmin && <li><Link className="dropdown-item" to={`/admin`} >Admin Panel</Link></li>}
               <li><button onClick={logoutHandler} className="dropdown-item" href="#">Logout</button></li>
             </ul>
           </div>
         </div>
 
       </div>
-      {searchResult !== null && searchResult.map((result) => (
-        <>
-          <div className="serachUserContainer" >
-            {isLoading ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} />
-              :
+
+      <>
+        <div className="serachUserContainer" >
+          {isLoading ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} />
+            : (searchResult !== null && searchResult.map((result) => (
               <Link style={{ textDecoration: "none", fontWeight: "500" }} to={`/profile/${result.username}`}><div className="searchUserItem">
                 <div style={{ display: "flex" }} >
                   <img src={result.profilePicture} alt="" className="searchUserImg" />
@@ -110,10 +110,12 @@ export default function Topbar() {
                 {user.followings.includes(result._id) ? "" : <PersonAddAltIcon />}
               </div>
               </Link>
-            }
-          </div >
-        </>
-      ))}
+            )))
+          }
+        </div >
+
+      </>
+
     </>
   )
 }
