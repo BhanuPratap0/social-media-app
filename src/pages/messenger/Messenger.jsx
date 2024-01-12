@@ -116,6 +116,7 @@ const Messenger = () => {
 
             const receiverId = currentChat.members.find((member) => member !== user._id);
             socket.emit("sendMessage", {
+                senderPic: user.profilePicture,
                 senderId: user._id,
                 receiverId: receiverId,
                 text: newMessage,
@@ -144,6 +145,7 @@ const Messenger = () => {
 
             const receiverId = currentChat.members.find((member) => member !== user._id);
             socket.emit("sendMessage", {
+                senderPic: user.profilePicture,
                 senderId: user._id,
                 receiverId: receiverId,
                 text: newMessage,
