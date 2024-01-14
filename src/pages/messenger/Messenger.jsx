@@ -224,7 +224,7 @@ const Messenger = () => {
 
     const deleteChat = async () => {
         try {
-            const res = await axios.delete("http://localhost:8800/api/conversation/delete/" + currentChat._id)
+            const res = await axios.delete("https://sociosync.onrender.com/api/conversation/delete/" + currentChat._id)
             console.log(res);
             setConversationDelete("Coversation Deleted")
             setChatBoxClass(false);
