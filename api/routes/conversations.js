@@ -30,5 +30,15 @@ router.get("/:userId", async(req, res)=>{
     }
 })
 
+//delete a conversation
+
+router.delete("/delete/:id", async(req,res) => {
+    try {
+        await Conversation.findByIdAndDelete(req.params.id);
+        res.status(200).json("Conversation Deleted")
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
 module.exports = router;
 

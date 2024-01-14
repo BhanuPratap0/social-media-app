@@ -67,15 +67,15 @@ export default function Topbar() {
           <div className="topbarIcons">
             <div className="topbarIconItem">
               <Person style={{ height: "30px", width: "30px" }} />
-              <span className="topbarIconBadge">1</span>
+              {/* <span className="topbarIconBadge">1</span> */}
             </div>
             <div className="topbarIconItem">
               <Link style={{ textDecoration: "none", color: "white" }} to="/messenger"><Chat style={{ height: "30px", width: "30px" }} /></Link>
-              <span className="topbarIconBadge">1</span>
+              {/* <span className="topbarIconBadge">1</span> */}
             </div>
             <div className="topbarIconItem">
               <Notifications style={{ height: "30px", width: "30px" }} />
-              <span className="topbarIconBadge">1</span>
+              {/* <span className="topbarIconBadge">1</span> */}
             </div>
           </div>
 

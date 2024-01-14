@@ -18,6 +18,7 @@ export const AuthContextProvider = ({ children }) => {
     const [postChange, setPostChange] = useState();
     const [userChange, setUserChange] = useState();
     const [coversationSearch, setCoversationSearch] = useState(null);
+    const [conversationDelete, setConversationDelete] = useState();
     // const host = "http://localhost:8800";
     const host = "https://sociosync.onrender.com";
     const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE)
@@ -42,7 +43,9 @@ export const AuthContextProvider = ({ children }) => {
             coversationSearch,
             setCoversationSearch,
             postLength, 
-            setPostLength
+            setPostLength,
+            conversationDelete, 
+            setConversationDelete,
         }} >
             {children}
         </AuthContext.Provider>

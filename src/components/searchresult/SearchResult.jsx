@@ -1,7 +1,10 @@
 import axios from 'axios';
 import './searchResult.css';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
-const SearchResult = ({ user,currentUser, setCoversationSearch, setUserChange }) => {
+const SearchResult = ({ user,currentUser, setCoversationSearch }) => {
+    const {setUserChange} = useContext(AuthContext);
     const handleClick = async (query) => {
         try {
             const res = await axios.post('https://sociosync.onrender.com/api/conversation/',

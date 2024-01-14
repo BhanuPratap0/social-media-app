@@ -11,7 +11,7 @@ import io from 'socket.io-client';
 import Lottie from 'react-lottie';
 import { CircularProgress } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { Search } from '@mui/icons-material'
+import { MoreVert, Search } from '@mui/icons-material'
 import SearchResult from '../../components/searchresult/SearchResult'
 
 
@@ -23,7 +23,7 @@ const Messenger = () => {
     const [newMessage, setNewMessage] = useState("");
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
-    const { user, host, setCoversationSearch, coversationSearch, userChange, setUserChange } = useContext(AuthContext);
+    const { user, host, setCoversationSearch, coversationSearch, userChange, setUserChange, conversationDelete, setConversationDelete } = useContext(AuthContext);
     const [chatBoxClass, setChatBoxClass] = useState(false);
     const [chatMenuClass, setChatMenuClass] = useState(false);
     const [currentChatUser, setCurrentChatUser] = useState(null);
@@ -75,7 +75,7 @@ const Messenger = () => {
             }
         }
         getConversations();
-    }, [user._id, userChange])
+    }, [user._id, ,conversationDelete,userChange])
 
     useEffect(() => {
         const getMessages = async () => {
@@ -222,6 +222,19 @@ const Messenger = () => {
         }
     }
 
+    const deleteChat = async () => {
+        try {
+            const res = await axios.delete("http://localhost:8800/api/conversation/delete/" + currentChat._id)
+            console.log(res);
+            setConversationDelete("Coversation Deleted")
+            setChatBoxClass(false);
+            setChatMenuClass(false);
+            setCurrentChat(null);
+        } catch (error) {
+            console.log("Error deleting conversation")
+        }
+        setConversationDelete("")
+    }
     return (
         <>
             <Topbar />
@@ -256,17 +269,28 @@ const Messenger = () => {
 
                     <div className="chatBoxWrapper">
                         <div className={chatBoxClass ? "chatBoxHeader" : "d-none"} >
-                            <ArrowCircleLeftIcon onClick={handleBackButton} className='closeIcon' fontSize='large' />
-                            <img src={currentChatUser?.profilePicture} alt="" />
-                            <div className='chatBoxHeaderText' >
-                                <span className='chatBoxUsername' >{currentChatUser?.username}</span>
-                                {userOnline ? <span className='onlineUser' >Online</span> : ""}
+                            <div className='chatBoxHeaderWrapper d-flex' >
+                                <ArrowCircleLeftIcon onClick={handleBackButton} className='closeIcon' fontSize='large' />
+                                <img src={currentChatUser?.profilePicture} alt="" />
+                                <div className='chatBoxHeaderText' >
+                                    <span className='chatBoxUsername' >{currentChatUser?.username}</span>
+                                    {userOnline ? <span className='onlineUser' >Online</span> : ""}
+                                </div>
                             </div>
+                            <div>
+                                <button className="chat-button " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <MoreVert />
+                                </button>
+                                <ul className="dropdown-menu">
+                                    <li><button onClick={deleteChat} className="dropdown-item">Delete Chat</button></li>
+                                </ul>
+                            </div>
+
                         </div>
                         {currentChat ? <>
                             <div className="chatBoxTop">
                                 {messages.map((m) => (
-                                    <div ref={scrollRef} >
+                                    <div >
                                         <Message key={m._id} message={m} own={m.sender === user._id} />
                                     </div>
                                 ))}
@@ -286,7 +310,6 @@ const Messenger = () => {
                                         placeholder='Write something'
                                         onChange={typingHandler}
                                         value={newMessage}
-
                                     ></textarea>
                                 </form>
                                 <button className='chatSubmitButton' onClick={handleSubmit} >Send</button>

@@ -57,9 +57,10 @@ const Post = ({ post }) => {
         fetchUser();
 
         const fetchComments = async () => {
-            const res = await axios.get(`${host}/api/post/getcomments/${post._id}`);
- 
-            setComments(res.data);
+            const res = await axios.get(`${host}/api/post/getcomments/${post._id}`); 
+            let newArray = res.data;
+            newArray.reverse();
+            setComments(newArray);
         }
         fetchComments();
 

@@ -11,6 +11,7 @@ const Comment = ({ comment, postUserId }) => {
 
     const { user, setPostChange, host } = useContext(AuthContext);
     const [userData, setUserData] = useState([]);
+    const scrollRef = useRef();
     useEffect(() => {
         const fetchUser = async () => {
             const res = await axios.get(`${host}/api/user?userId=${comment.userId}`);
@@ -30,8 +31,10 @@ const Comment = ({ comment, postUserId }) => {
         setPostChange("")
     }
 
+    
+
     return (
-        <div className='comment' >
+        <div className='comment' ref={scrollRef} >
             <div className="commentWrapper">
                 <img className='comment-user-pic' src={userData.profilePicture} alt={userData.profilePicture}/>
                 <div className='commentBody' >

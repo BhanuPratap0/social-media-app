@@ -44,8 +44,16 @@
     align-items: center;
     margin-left: -12px;
     margin-top: -10px;
+    justify-content: space-between;
 }
-
+.chatBoxHeaderWrapper{
+    align-items: center;
+}
+.chat-button{
+    background-color: #8ab7ed;
+    border: none;
+    color: black;
+}
 .chatBoxHeader img{
     width: 37px;
     height: 37px;
@@ -125,7 +133,7 @@
     position: absolute;
     top: 10%;
     font-size: 50px;
-    color: rgb(245, 245, 245);
+    color: grey;
     text-align: center;
     cursor: default;
 
