@@ -17,7 +17,7 @@ const passportSetup = require('./passport')
 
 
 app.use(cors({
-    origin: "https://sociosync.netlify.app",
+    origin: `https://sociosync.netlify.app`,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
 }));
