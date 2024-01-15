@@ -21,9 +21,9 @@ function App() {
       try {
         axios.defaults.withCredentials = true;
         const res = await axios.get("https://sociosync.onrender.com/api/auth/login/success",
-        {},
           {
             withCredentials: "true",    
+            crossDomain: true,
           });
         console.log(res.data);
         localStorage.setItem("user", JSON.stringify(res.data));
