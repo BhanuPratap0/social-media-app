@@ -8,7 +8,7 @@ const GOOGLE_CLIENT_SECRET = "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"
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: "https://sociosync.onrender.com/api/auth/google/callback"
+  callbackURL: "/api/auth/google/callback"
 },
   async (accessToken, refreshToken, profile, done)=> {
     // User.findOrCreate({ googleId: profile.id }, function (err, user) {

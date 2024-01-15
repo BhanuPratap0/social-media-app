@@ -21,8 +21,7 @@ function App() {
       try {
         const res = await axios.get("https://sociosync.onrender.com/api/auth/login/success",
           {
-            withCredentials: "true",
-    
+            withCredentials: "true",    
           });
         console.log(res.data);
         localStorage.setItem("user", JSON.stringify(res.data));
