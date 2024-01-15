@@ -9,13 +9,13 @@ import { Alert } from '@mui/material'
 
 const Login = () => {
 
-  
+
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [toasttype, setToastType] = useState("success");
   const email = useRef();
   const password = useRef();
-  const { isFetching, user, dispatch, error ,setLoginSuccess } = useContext(AuthContext);
+  const { isFetching, user, dispatch, error, setLoginSuccess } = useContext(AuthContext);
 
 
   let history = useNavigate();
@@ -36,19 +36,23 @@ const Login = () => {
     );
     history("/")
   };
-  
-  useEffect(()=>{
-    if(error){
+
+  const google = () => {
+    window.open("https://sociosync.onrender.com/api/auth/google", "_self")
+  }
+
+  useEffect(() => {
+    if (error) {
       setMessage("Invalid Credentials")
-        setToastType("error")
-        setOpen(true);
-    }else{
+      setToastType("error")
+      setOpen(true);
+    } else {
       setLoginSuccess(true);
     }
-    if(user){
+    if (user) {
       setLoginSuccess(true);
     }
-  },[error,setLoginSuccess,user])
+  }, [error, setLoginSuccess, user])
 
 
   return (
@@ -75,15 +79,23 @@ const Login = () => {
               className='loginInput'
               ref={password} />
 
-            <button type='submit' className="loginButton">{isFetching ? <CircularProgress style={{color:'white', height:"20px", width:"20px"}} /> : "Log In"}</button>
+            <button type='submit' className="loginButton">{isFetching ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} /> : "Log In"}</button>
+            
             <span className="loginForgot">Forgot Password</span>
-            <Link to={"/register"} style={{textAlign:"center"}} ><button className="loginRegisterButton">
-            {isFetching ? <CircularProgress style={{color:'white', height:"20px", width:"20px"}} /> : "Create a New Account"}
-              </button></Link>
+            <Link to={"/register"} style={{ textAlign: "center" }} ><button className="loginRegisterButton">
+              {isFetching ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} /> : "Create a New Account"}
+            </button></Link>   
+            <hr></hr>
+            <center><span>Or Login With</span></center>        
+            <div className="loginButtonGoogle google" onClick={google} >
+              <img src={require('../../components/images/google.png')} alt="" className="icon" />
+            </div>
           </form>
+
         </div>
+
       </div>
-      <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}  anchorOrigin={{ vertical:"top", horizontal:"center" }} >
+      <Snackbar open={open} autoHideDuration={1000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }} >
         <Alert variant="filled" severity={toasttype} sx={{ width: '100%' }}>
           {message}
         </Alert>

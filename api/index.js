@@ -11,10 +11,30 @@ const postRoutes = require('./routes/postRoutes')
 const conversations = require('./routes/conversations')
 const messages = require('./routes/messages')
 var cors = require('cors')
+const passport = require("passport");
+const cookieSession = require("cookie-session");
+const passportSetup = require('./passport')
 
 
-app.use(cors());
+app.use(cors({
+    origin: "https://sociosync.netlify.app",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+}));
 app.use(express.json())
+
+app.use(cookieSession(
+    {
+        name: "session",
+        keys: ["bhanu"],
+        maxAge: 24 * 60 * 60 * 100
+    }
+))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 dotenv.config();
 connectDB();
