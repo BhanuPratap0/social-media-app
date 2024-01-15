@@ -19,6 +19,7 @@ function App() {
   useEffect(() => {
     const getUser = async () => {
       try {
+        axios.defaults.withCredentials = true;
         const res = await axios.get("https://sociosync.onrender.com/api/auth/login/success",
           {
             withCredentials: "true",    
