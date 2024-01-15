@@ -22,7 +22,7 @@ function App() {
         axios.defaults.withCredentials = true;
         const res = await axios.get("https://sociosync.onrender.com/api/auth/login/success",
           {
-            withCredentials: "true",    
+            withCredentials: true,    
             crossDomain: true,
           });
         console.log(res.data);
