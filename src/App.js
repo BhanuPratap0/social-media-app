@@ -16,24 +16,24 @@ import axios from "axios";
 function App() {
   const { user } = useContext(AuthContext);
   let history = useNavigate();
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        axios.defaults.withCredentials = true;
-        const res = await axios.get("https://sociosync.onrender.com/api/auth/login/success",
-          {
-            withCredentials: true,    
-          });
-        console.log(res.data);
-        localStorage.setItem("user", JSON.stringify(res.data));
-        history("/");
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       axios.defaults.withCredentials = true;
+  //       const res = await axios.get("https://sociosync.onrender.com/api/auth/login/success",
+  //         {
+  //           withCredentials: true,    
+  //         });
+  //       console.log(res.data);
+  //       localStorage.setItem("user", JSON.stringify(res.data));
+  //       history("/");
 
-      } catch (error) {
-        console.log("Authentication failed")
-      }
-    }
-    getUser();
-  }, [])
+  //     } catch (error) {
+  //       console.log("Authentication failed")
+  //     }
+  //   }
+  //   getUser();
+  // }, [])
 
 
 

@@ -37,10 +37,10 @@ const Login = () => {
     history("/")
   };
 
-  const google = () => {
-    window.open("https://sociosync.onrender.com/api/auth/google", "_self")
-    // window.open("http://localhost:8800/api/auth/google", "_self")
-  }
+  // const google = () => {
+  //   window.open("https://sociosync.onrender.com/api/auth/google", "_self")
+  //   // window.open("http://localhost:8800/api/auth/google", "_self")
+  // }
 
   useEffect(() => {
     if (error) {
@@ -86,11 +86,11 @@ const Login = () => {
             <Link to={"/register"} style={{ textAlign: "center" }} ><button className="loginRegisterButton">
               {isFetching ? <CircularProgress style={{ color: 'white', height: "20px", width: "20px" }} /> : "Create a New Account"}
             </button></Link>   
-            <hr></hr>
+            {/* <hr></hr>
             <center><span>Or Login With</span></center>        
             <div className="loginButtonGoogle google" onClick={google} >
               <img src={require('../../components/images/google.png')} alt="" className="icon" />
-            </div>
+            </div> */}
           </form>
 
         </div>
