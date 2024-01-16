@@ -14,8 +14,6 @@ var cors = require('cors')
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const passportSetup = require('./passport')
-var cookieParser = require('cookie-parser')
-var session = require('express-session')
 
 
 app.use(cors({
@@ -23,25 +21,15 @@ app.use(cors({
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
 }));
-app.use(passport.session({ secret: 'anything' }));
 app.use(express.json())
 
-// app.use(cookieParser()) // required before session.
-app.use(session(
+app.use(cookieSession(
     {
-        resave: true,
-        saveUninitialized: true,
-        secret: process.env.SESSION_SECRET || "a secret",
+        name: "session",
+        keys: ["bhanu"],
+        maxAge: 24 * 60 * 60 * 100
     }
 ))
-
-// app.use(cookieSession(
-//     {
-//         name: "session",
-//         keys: ["bhanu"],
-
-//     }
-// ))
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -63,7 +51,7 @@ app.use('/api/conversation', conversations);
 app.use('/api/message', messages);
 
 const PORT = process.env.PORT || 8800;
-const server = app.listen(PORT, console.log(`Backend Server is Running! on post: ${PORT} `));
+const server = app.listen(PORT,console.log(`Backend Server is Running! on post: ${PORT} `));
 
 
 const io = require("socket.io")(server, {
