@@ -75,6 +75,7 @@ router.get("/login/success", (req, res) => {
 router.get("/logout", (req, res) => {
     req.logOut();
     res.redirect("https://sociosync.netlify.app");
+    // res.redirect("http://localhost:3000");
 })
 
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
@@ -82,6 +83,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 router.get("/google/callback",
     passport.authenticate("google", {
         successRedirect: "https://sociosync.netlify.app"
+        // successRedirect: "http://localhost:3000"
     }))
 
 

@@ -39,6 +39,7 @@ const Login = () => {
 
   const google = () => {
     window.open("https://sociosync.onrender.com/api/auth/google", "_self")
+    // window.open("http://localhost:8800/api/auth/google", "_self")
   }
 
   useEffect(() => {

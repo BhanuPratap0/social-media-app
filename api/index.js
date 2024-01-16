@@ -14,14 +14,16 @@ var cors = require('cors')
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const passportSetup = require('./passport')
+const session = require("express-session");
 
+app.use(express.json())
 
 app.use(cors({
     origin: `https://sociosync.netlify.app`,
+    // origin: `http://localhost:3000`,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
 }));
-app.use(express.json())
 
 app.use(cookieSession(
     {
@@ -30,6 +32,19 @@ app.use(cookieSession(
         maxAge: 24 * 60 * 60 * 100
     }
 ))
+
+
+// app.use(session({
+//     secret: process.env.SESSION_SECRET || "bhanu",
+//     resave: false, //we dont want to save a session if nothing is modified
+//     saveUninitialized: false, //dont create a session until something is stored
+//     cookie: {
+//         maxAge: 24 * 60 * 60 * 1000, // 7 days
+//         //Enable when deployment OR when not using localhost, this wont work without https
+//         // sameSite: "none", //Enable when deployment OR when not using localhost, We're not on the same site, we're using different site so the cookie need to effectively transfer from Backend to Frontend
+//     },
+// }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -51,14 +66,14 @@ app.use('/api/conversation', conversations);
 app.use('/api/message', messages);
 
 const PORT = process.env.PORT || 8800;
-const server = app.listen(PORT,console.log(`Backend Server is Running! on post: ${PORT} `));
+const server = app.listen(PORT, console.log(`Backend Server is Running! on post: ${PORT} `));
 
 
 const io = require("socket.io")(server, {
     pingTimeout: 60000,
     cors: {
-        origin: `https://sociosync.netlify.app`,
-        //  origin: `http://localhost:3000`,
+        // origin: `https://sociosync.netlify.app`,
+         origin: `http://localhost:3000`,
     },
 });
 
