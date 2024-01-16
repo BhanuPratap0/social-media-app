@@ -20,7 +20,7 @@ function App() {
     const getUser = async () => {
       try {
         axios.defaults.withCredentials = true;
-        const res = await axios.get("https://sociosync.onrender.com/api/auth/login/success",
+        const res = await axios.get("http://sociosync.onrender.com/api/auth/login/success",
           {
             withCredentials: true,    
           });

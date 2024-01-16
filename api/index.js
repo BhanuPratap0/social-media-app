@@ -21,7 +21,6 @@ app.use(express.json())
 app.use(cors({
     origin: `https://sociosync.netlify.app`,
     // origin: `http://localhost:3000`,
-    methods: "GET,POST,PUT,DELETE",
     credentials: true,
 }));
 
@@ -34,21 +33,9 @@ app.use(cookieSession(
 ))
 
 
-// app.use(session({
-//     secret: process.env.SESSION_SECRET || "bhanu",
-//     resave: false, //we dont want to save a session if nothing is modified
-//     saveUninitialized: false, //dont create a session until something is stored
-//     cookie: {
-//         maxAge: 24 * 60 * 60 * 1000, // 7 days
-//         secure: true,//Enable when deployment OR when not using localhost, this wont work without https
-//         sameSite: "none", //Enable when deployment OR when not using localhost, We're not on the same site, we're using different site so the cookie need to effectively transfer from Backend to Frontend
-//     },
-// }));
-
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 
 dotenv.config();

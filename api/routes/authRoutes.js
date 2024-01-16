@@ -82,7 +82,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 
 router.get("/google/callback",
     passport.authenticate("google", {
-        successRedirect: "https://sociosync.netlify.app"
+        successRedirect: "https://sociosync.netlify.app/"
         // successRedirect: "http://localhost:3000"
     }))
 

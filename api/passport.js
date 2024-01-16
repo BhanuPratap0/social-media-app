@@ -11,13 +11,13 @@ passport.use(new GoogleStrategy({
   callbackURL: "https://sociosync.onrender.com/api/auth/google/callback"
   // callbackURL: "/api/auth/google/callback"
 },
-  async (accessToken, refreshToken, profile, done)=> {
+  async (accessToken, refreshToken, profile, done) => {
     // User.findOrCreate({ googleId: profile.id }, function (err, user) {
     //   return cb(err, user);
     // });
-   
-    
-    const getuser = await User.findOne({email: profile.emails[0].value})
+
+
+    const getuser = await User.findOne({ email: profile.emails[0].value })
     //No user was found... so create a new user with values from Facebook (all the profile. stuff)
     if (!getuser) {
       newUser = new User({
@@ -43,3 +43,5 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, user)
 })
+
+
