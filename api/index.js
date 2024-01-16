@@ -25,25 +25,25 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use(cookieSession(
-    {
-        name: "session",
-        keys: ["bhanu"],
-        maxAge: 24 * 60 * 60 * 100
-    }
-))
+// app.use(cookieSession(
+//     {
+//         name: "session",
+//         keys: ["bhanu"],
+//         maxAge: 24 * 60 * 60 * 100
+//     }
+// ))
 
 
-// app.use(session({
-//     secret: process.env.SESSION_SECRET || "bhanu",
-//     resave: false, //we dont want to save a session if nothing is modified
-//     saveUninitialized: false, //dont create a session until something is stored
-//     cookie: {
-//         maxAge: 24 * 60 * 60 * 1000, // 7 days
-//         //Enable when deployment OR when not using localhost, this wont work without https
-//         // sameSite: "none", //Enable when deployment OR when not using localhost, We're not on the same site, we're using different site so the cookie need to effectively transfer from Backend to Frontend
-//     },
-// }));
+app.use(session({
+    secret: process.env.SESSION_SECRET || "bhanu",
+    resave: false, //we dont want to save a session if nothing is modified
+    saveUninitialized: false, //dont create a session until something is stored
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000, // 7 days
+        //Enable when deployment OR when not using localhost, this wont work without https
+        // sameSite: "none", //Enable when deployment OR when not using localhost, We're not on the same site, we're using different site so the cookie need to effectively transfer from Backend to Frontend
+    },
+}));
 
 
 app.use(passport.initialize());
