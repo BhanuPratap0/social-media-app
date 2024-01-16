@@ -26,8 +26,14 @@ app.use(cors({
 app.use(passport.session({ secret: 'anything' }));
 app.use(express.json())
 
-app.use(cookieParser()) // required before session.
-app.use(session({ secret: 'keyboard cat' }))
+// app.use(cookieParser()) // required before session.
+app.use(session(
+    {
+        resave: true,
+        saveUninitialized: true,
+        secret: process.env.SESSION_SECRET || "a secret",
+    }
+))
 
 // app.use(cookieSession(
 //     {
