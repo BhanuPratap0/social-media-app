@@ -21,13 +21,14 @@ app.use(cors({
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
 }));
+app.use(passport.session({ secret: 'anything' }));
 app.use(express.json())
 
 app.use(cookieSession(
     {
         name: "session",
         keys: ["bhanu"],
-        maxAge: 24 * 60 * 60 * 100
+        
     }
 ))
 
