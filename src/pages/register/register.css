@@ -14,6 +14,12 @@
     display: flex;
 }
 
+.registerRight{
+    flex: 1 !important;
+    display: flex;
+    overflow: scroll;
+}
+
 .loginLeft,.loginRight{
     flex: 1 !important;
     display: flex;
@@ -35,7 +41,7 @@
 
 .registerBox{
     overflow-y: scroll;
-    height: 700px;
+    height: 800px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
@@ -45,16 +51,13 @@
 }
 
 .loginInput{
-    height: 60px;
+    height: 40px;
     border-radius: 10px;
     border: 1px solid grey;
     font-size: 18px;
-    padding-left: 20px;
-    margin-bottom: 10px;
 
 }
 textarea{
-  
     border-radius: 10px;
     border: 1px solid grey;
     font-size: 18px;
@@ -137,6 +140,10 @@ option{
     .loginInput .upload-button{
         padding: 0 2px 0 2px;
         font-size: 16px;
+    }
+    .registerRight{
+        margin-bottom: 20px;
+        margin-top: -50px;
     }
    
 }

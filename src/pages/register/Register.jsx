@@ -133,7 +133,7 @@ const Register = () => {
           <h3 className='loginLogo' >SocioSync</h3>
           <span className="loginDesc">Connect with friends and the world around you on Bhanusocial</span>
         </div>
-        <div className="loginRight">
+        <div className="registerRight">
           <form onSubmit={handleSubmit} className="registerBox">
             <input type="text" ref={username} placeholder='Username' className='loginInput' />
 
