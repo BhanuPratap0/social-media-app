@@ -8,7 +8,7 @@ const Message = ({ message, own }) => {
   return (
     <div className={own ? "message own" : "message"}>
       <div className="messageTop">
-        <img src={message.senderPic} alt="" className='messageImg' />
+        {/* <img src={message.senderPic} alt="" className='messageImg' /> */}
         <p className='messageText'>{message.text}</p>
       </div>
       <div className="messageBottom">
