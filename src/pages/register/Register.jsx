@@ -167,7 +167,9 @@ const Register = () => {
 
             </label>
             <label htmlFor='profile' style={{ display: "flex", justifyContent: "space-between" }} className='loginInput' >
-              <span style={{ paddingTop: "10px", opacity: "0.6" }} >Upload Cover Picture</span>
+              <span style={{ paddingTop: "10px", opacity: "0.6" }} >{cover != null
+                ? (<><DoneIcon style={{ color: "green" }} /> Uploaded </>)
+                : "Upload Profile Picture"} </span>
               <span className='upload-button' >Upload</span>
               <input
                 className='uploadInput'
