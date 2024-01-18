@@ -65,7 +65,7 @@ const UserRow = ({ user, count }) => {
     const handleDeleteUser = async() => { 
       
         try {
-            await  axios.delete("http://localhost:8800/api/user/" + user._id + "/" + currentUser.isAdmin)
+            await  axios.delete("https://sociosync.onrender.com/api/user/" + user._id + "/" + currentUser.isAdmin)
             console.log("User Deleted")
             setOpen(false);
             setUserChange("Deleted")

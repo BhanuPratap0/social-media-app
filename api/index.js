@@ -18,11 +18,7 @@ const session = require("express-session");
 
 app.use(express.json())
 
-app.use(cors({
-    origin: `https://sociosync.netlify.app`,
-    // origin: `http://localhost:3000`,
-    credentials: true,
-}));
+app.use(cors());
 
 app.use(cookieSession(
     {
