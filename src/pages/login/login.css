@@ -1,4 +1,4 @@
-.login{
+.login {
     margin: 0;
     width: 99vw;
     height: 100vh;
@@ -8,31 +8,35 @@
     justify-content: center;
 }
 
-.loginWrapper{
+.loginWrapper {
     width: 70%;
     height: 70%;
     display: flex;
 }
 
-.loginLeft,.loginRight{
+.loginLeft,
+.loginRight {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.loginLogo{
+.loginLogo {
     font-size: 50px;
     font-weight: bold;
-    color: #142d4c !important;
+    background: -webkit-linear-gradient(rgba(6,17,33,1), rgba(4, 56, 115, 1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 10px;
+    
 }
 
-.loginDesc{
+.loginDesc {
     font-size: 24px;
 }
 
-.loginBox{
+.loginBox {
     height: 300px;
     padding: 10px;
     background-color: white;
@@ -42,7 +46,7 @@
     justify-content: space-between;
 }
 
-.loginInput{
+.loginInput {
     height: 50px;
     border-radius: 10px;
     border: 1px solid grey;
@@ -51,68 +55,76 @@
 
 }
 
-.loginInput:focus{
+.loginInput:focus {
     outline: none !important;
 }
 
-.loginButton{
+.loginButton {
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: #142d4c !important;
+    background-image: linear-gradient(288deg, rgba(0, 85, 255, 1) 1.5%, rgba(4, 56, 115, 1) 91.6%);
+
+
     color: white;
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
 }
 
-.loginForgot{
+.loginForgot {
     text-align: center;
     color: #142d4c !important;
 }
 
-.loginRegisterButton{
+.loginRegisterButton {
     width: 60%;
     height: 50px;
     align-self: center;
     border-radius: 10px;
     border: none;
-    background-color: #42b72a;
+    background-image: linear-gradient(109.6deg, rgba(61, 131, 97, 1) 11.2%, rgba(28, 103, 88, 1) 91.1%);
     color: white;
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
 }
-.loginButtonGoogle{
+
+.loginButtonGoogle {
     margin-top: 20px;
     width: 75px;
     padding: 10px 20px;
     border-radius: 5px;
-    color: white;  
+    color: white;
     display: flex;
     align-self: center;
     font-weight: bold;
-  }
-  .google{
+}
+
+.google {
     background-color: #df4930;
-  }
+}
 
 
-  
+
 
 @media only screen and (max-width: 600px) {
-    .login{
+    .login {
         flex-direction: column;
     }
-    .loginWrapper{
+
+    .loginWrapper {
         width: 80%;
         height: 100%;
         flex-direction: column;
     }
-    .loginRegisterButton{
+
+    .loginRegisterButton {
         height: 70px !important;
     }
-    .loginLeft,.loginRight{
-        flex:0.4 !important; 
+
+    .loginLeft,
+    .loginRight {
+        flex: 0.4 !important;
     }
 }
