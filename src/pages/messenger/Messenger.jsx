@@ -290,7 +290,7 @@ const Messenger = () => {
                         {currentChat ? <>
                             <div className="chatBoxTop">
                                 {messages.map((m) => (
-                                    <div >
+                                    <div ref={scrollRef} >
                                         <Message key={m._id} message={m} own={m.sender === user._id} />
                                     </div>
                                 ))}
