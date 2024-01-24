@@ -93,9 +93,13 @@ const Register = () => {
   }
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     if (passwordAgain.current.value !== password.current.value) {
+      setIsLoading(false);
       passwordAgain.current.setCustomValidity("Passwords don't match")
+      return;
+
     } else {
       const user = {
         username: username.current.value,
@@ -109,8 +113,10 @@ const Register = () => {
       }
       try {
         await axios.post(`https://sociosync.onrender.com/api/auth/register`, user);
+        setIsLoading(false);
         history("/login");
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
       }
     }
