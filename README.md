@@ -81,9 +81,9 @@ We welcome contributions to SocioSync! If you'd like to contribute, please fork 
 ## Links
 
 - Project homepage: [https://sociosync.netlify.app/](https://sociosync.netlify.app/)
-- Repository: `https://github.com/your-username/sociosync`
-- Issue tracker: `https://github.com/your-username/sociosync/issues`
-  - In case of sensitive bugs like security vulnerabilities, please contact [your-email@example.com]. We value your effort to improve the security and privacy of this project!
+- Repository: `[https://github.com/your-username/sociosync](https://github.com/BhanuPratap0/social-media-app-frontend)`
+- Issue tracker: `[https://github.com/your-username/sociosync](https://github.com/BhanuPratap0/social-media-app-frontend)/issues`
+  - In case of sensitive bugs like security vulnerab ilities, please contact singh28986@gmail.com. We value your effort to improve the security and privacy of this project!
 
 ## Licensing
 
